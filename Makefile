@@ -6,7 +6,7 @@
 #    By: chon <chon@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/23 11:51:56 by chon              #+#    #+#              #
-#    Updated: 2024/04/30 16:50:08 by chon             ###   ########.fr        #
+#    Updated: 2024/05/06 15:00:31 by chon             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBFT_DIR = ./libft
 LIBFT = ./libft/libft.a
 CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g3
 OBJS = $(SRCS:.c=.o)
-SRCS = main.c list_op_1.c list_op_2.c sort.c
+SRCS = main.c stack_op_1.c stack_op_2.c stack_op_3.c sort.c
 OBJS_B = $(BONUS:.c=.o)
 # SRCS_B = ./bonus/
 

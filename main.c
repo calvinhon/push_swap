@@ -6,17 +6,17 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/03 13:09:38 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/06 14:15:42 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_sorted(t_stack **lst)
+int	is_sorted(t_stack **stack)
 {
 	t_stack	*cur;
 
-	cur = *lst;
+	cur = *stack;
 	while (cur->fwd)
 	{
 		if (cur->num > cur->fwd->num)
@@ -26,7 +26,7 @@ int	is_sorted(t_stack **lst)
 	return (1);
 }
 
-int	create_llst(t_stack **lst, int *int_array, int array_size)
+int	create_stack(t_stack **stack, int *int_array, int array_size)
 {
 	int	i;
 
@@ -34,9 +34,9 @@ int	create_llst(t_stack **lst, int *int_array, int array_size)
 	while (array_size > 0)
 	{
 		if (i == 0)
-			*lst = new_node(int_array[i++]);
+			*stack = new_node(int_array[i++]);
 		else
-			add(lst, new_node(int_array[i++]), -1);
+			add(stack, new_node(int_array[i++]), -1);
 		array_size--;
 	}
 	return (1);
@@ -113,25 +113,24 @@ int	main(int ac, char **av)
 		ft_printf("Error\n");
 		return (1);
 	}
-	push(&a_top, &b_top, 1);
-	push(&a_top, &b_top, 1);
-	// printf("b:%lld\n", b_top->num);
-	create_llst(&a_top, int_array, ac - 1);
-				t_stack *cur_a = a_top;
-				t_stack *cur_b = b_top;
-				while (cur_a)
-				{
-					printf("%lld\n", cur_a->num);
-					cur_a = cur_a->fwd;
-				}
-				ft_printf("\n");
-				while (cur_b)
-				{
-					printf("%lld\n", cur_b->num);
-					cur_b = cur_b->fwd;
-				}
-	// if (is_sorted(&a_top) == 0)
-	// 	sort_stack(&a_top, &b_top, ac - 1);
+	create_stack(&a_top, int_array, ac - 1);
+	// push(&a_top, &b_top, 0);
+	// rev_rotate(&a_top, &b_top, 3);
+				// t_stack *cur_a = a_top;
+				// t_stack *cur_b = b_top;
+				// while (cur_a)
+				// {
+				// 	printf("%lld\n", cur_a->num);
+				// 	cur_a = cur_a->fwd;
+				// }
+				// ft_printf("\n");
+				// while (cur_b)
+				// {
+				// 	printf("%lld\n", cur_b->num);
+				// 	cur_b = cur_b->fwd;
+				// }
+	if (is_sorted(&a_top) == 0)
+		sort_stack(&a_top, &b_top, ac - 1);
 				// ft_printf("\n");
 				// cur_a = a_top;
 				// cur_b = b_top;
