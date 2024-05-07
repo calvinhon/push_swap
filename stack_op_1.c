@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_op_1.c                                        :+:      :+:    :+:   */
+/*   stack_op_1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/06 14:13:21 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/07 14:12:32 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	(*stack_1)->num = (*stack_1)->fwd->num;
 	(*stack_1)->fwd->num = tmp;
 	if (stack_id == 3)
-	{	
+	{
 		if (!(*stack_2) || !((*stack_2)->fwd))
 			return ;
 		tmp = (*stack_2)->num;
@@ -49,12 +49,15 @@ void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 
 void	push(t_stack **from, t_stack **to, int stack_id)
 {
+	t_stack	*cur;
+
 	if (!(*from))
 		return ;
 	else if (!(*to))
 		*to = new_node((*from)->num);
 	else
 		add(to, new_node((*from)->num), 0);
+	cur = (*from)->fwd;
 	*from = del_first_node(*from);
 	if (stack_id == 1)
 		ft_printf("pa\n");

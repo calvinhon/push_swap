@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/06 16:41:02 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/07 16:00:32 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,18 @@ void	sort_stack_ct3(t_stack **stack_a, t_stack **stack_b, int max_num)
 		swap(stack_a, stack_b, 1);
 }
 
+// void	sort_stack_ct4(stack_a, stack_b)
+// {
+	
+// }
+
+
 void	sort_stack(t_stack **stack_a, t_stack **stack_b, int inputs)
 {
 	int		max_num;
 	int		min_num;
 	t_stack	*cur_a;
-	int		misplaced_node;
+	int		node_to_move;
 
 	cur_a = *stack_a;
 	if (inputs == 2)
@@ -64,22 +70,37 @@ void	sort_stack(t_stack **stack_a, t_stack **stack_b, int inputs)
 	min_num = find_min(*stack_a);
 	if (inputs == 3)
 		sort_stack_ct3(stack_a, stack_b, max_num);
+	if (inputs == 5)
+		sort_stack_ct5(stack_a, stack_b, max_num);
 	else
 	{
-		misplaced_node = find_first_err(*stack_a, *stack_a, min_num, max_num);
-		if (ct_wrong_order(*stack_a, *stack_a, min_num, max_num) == 1)
-			while (is_sorted(stack_a) == 0)
-			{
-				while ((*stack_a)->num < (*stack_a)->fwd->num)
-				{
-					if (misplaced_node < inputs / 2)
-						rotate(stack_a, stack_b, 1);
-					else
-						rev_rotate(stack_a, stack_b, 1);
-				}
-				swap(stack_a, stack_b, 1);
-			}
-		// printf("wrong:%d\n", ct_wrong_order(*stack_a, *stack_a, min_num, max_num));
+		node_to_move = find_first_err(*stack_a, *stack_a, min_num, max_num);
+		// if (ct_wrong_order(*stack_a, *stack_a, min_num, max_num) == 1)
+		// {
+		// 	while (is_sorted(stack_a) == 0)
+		// 	{
+		// 		while ((*stack_a)->num < (*stack_a)->fwd->num)
+		// 		{
+		// 			if (node_to_move < inputs / 2)
+		// 				rotate(stack_a, stack_b, 1);
+		// 			else
+		// 				rev_rotate(stack_a, stack_b, 1);
+		// 		}
+		// 		swap(stack_a, stack_b, 1);
+		// 		while (cur_a->num < cur_a->fwd->num)
+		// 		{
+		// 			cur_a = cur_a->fwd
+		// 		}
+				// while ((*stack_a)->num < (*stack_a)->fwd->num)
+				// {
+				// 	if (node_to_move < inputs / 2)
+				// 		rev_rotate(stack_a, stack_b, 1);
+				// 	else
+				// 		rotate(stack_a, stack_b, 1);
+				// }
+		// 	}
+		// }
+		printf("wrong:%d\n", ct_wrong_order(*stack_a, *stack_a, min_num, max_num));
 		// printf("error located in node:%d\n", find_first_error(*stack_a, *stack_a, min_num, max_num));
 	}
 }
