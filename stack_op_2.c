@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:30:30 by chon              #+#    #+#             */
-/*   Updated: 2024/05/07 14:12:44 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/08 12:44:00 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ t_stack	*del_first_node(t_stack *top)
 {
 	t_stack	*new_top;
 
-	if (!top || !top->fwd)
+	if (!top || !(top->fwd))
+	{
+		free(top);
 		return (NULL);
+	}
 	new_top = top->fwd;
 	new_top->bwd = NULL;
 	free(top);
@@ -73,7 +76,7 @@ void	add(t_stack **head, t_stack *new_node, int position)
 	}
 }
 
-t_stack	*new_node(int nbr)
+t_stack	*new_node(int nbr, int position)
 {
 	t_stack	*node;
 
@@ -81,6 +84,7 @@ t_stack	*new_node(int nbr)
 	if (!node)
 		return (NULL);
 	node->num = nbr;
+	node->final_position = position;
 	node->bwd = NULL;
 	node->fwd = NULL;
 	return (node);

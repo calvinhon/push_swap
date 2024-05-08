@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/07 15:30:50 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/08 15:53:48 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,26 @@ int	is_sorted(t_stack **stack)
 	return (1);
 }
 
-int	create_stack(t_stack **stack, int *int_array, int array_size)
+int	create_stack(t_stack **stack, int *inputs, int num_of_inputs)
 {
 	int	i;
+	int	*final_positions;
 
 	i = 0;
-	while (array_size > 0)
+	final_positions = calloc(sizeof(int), num_of_inputs);
+	if (!final_positions)
+		return (0);
+	find_final_pos(final_positions, inputs, num_of_inputs);
+	while (num_of_inputs > 0)
 	{
 		if (i == 0)
-			*stack = new_node(int_array[i++]);
+			*stack = new_node(inputs[i], final_positions[i]);
 		else
-			add(stack, new_node(int_array[i++]), -1);
-		array_size--;
+			add(stack, new_node(inputs[i], final_positions[i]), -1);
+		i++;
+		num_of_inputs--;
 	}
+	free(final_positions);
 	return (1);
 }
 
@@ -69,9 +76,9 @@ int	are_ints(char **array)
 	return (1);
 }
 
-int	*parse_input(int ac, char **av)
+int	*parse_inputs(int ac, char **av)
 {
-	int	*int_array;
+	int	*inputs;
 	int	elements;
 	int	i;
 	int	j;
@@ -79,41 +86,42 @@ int	*parse_input(int ac, char **av)
 	elements = ac - 1;
 	if (are_ints(av) == 0)
 		return (NULL);
-	int_array = malloc(sizeof(int) * elements);
-	if (!int_array)
+	inputs = malloc(sizeof(int) * elements);
+	if (!inputs)
 		return (NULL);
 	i = 0;
 	j = 1;
 	while (--ac > 0)
-		int_array[i++] = ft_atoi(av[j++]);
+		inputs[i++] = ft_atoi(av[j++]);
 	i = -1;
 	while (++i < elements)
 	{
 		j = i + 1;
 		while (j < elements)
-			if (int_array[i] == int_array[j++])
+			if (inputs[i] == inputs[j++])
 				return (NULL);
 	}
-	return (int_array);
+	return (inputs);
 }
 
 int	main(int ac, char **av)
 {
 	t_stack	*a_top;
 	t_stack	*b_top;
-	int		*int_array;
+	int		*inputs;
 
 	a_top = NULL;
 	b_top = NULL;
 	if (ac < 2)
 		return (1);
-	int_array = parse_input(ac, av);
-	if (!int_array)
+	inputs = parse_inputs(ac, av);
+	if (!inputs)
 	{
 		ft_printf("Error\n");
 		return (1);
 	}
-	create_stack(&a_top, int_array, ac - 1);
+	if (!create_stack(&a_top, inputs, ac - 1))
+		return (1);
 	// push(&a_top, &b_top, 0);
 	// push(&b_top, &a_top, 0);
 	// rev_rotate(&a_top, &b_top, 3);
@@ -121,7 +129,8 @@ int	main(int ac, char **av)
 				t_stack *cur_b = b_top;
 				while (cur_a)
 				{
-					printf("%lld ", cur_a->num);
+					printf("%lld | %d\n", cur_a->num, cur_a->final_position);
+					// printf("%lld ", cur_a->num);
 					cur_a = cur_a->fwd;
 				}
 				printf("\n");
@@ -138,7 +147,8 @@ int	main(int ac, char **av)
 				cur_b = b_top;
 				while (cur_a)
 				{
-					printf("%lld ", cur_a->num);
+					printf("%lld | %d\n", cur_a->num, cur_a->final_position);
+					// printf("%lld ", cur_a->num);
 					cur_a = cur_a->fwd;
 				}
 				printf("\n");
@@ -150,6 +160,6 @@ int	main(int ac, char **av)
 				printf("\n");
 	free_stack(&a_top);
 	free_stack(&b_top);
-	free(int_array);
+	free(inputs);
 	return (0);
 }
