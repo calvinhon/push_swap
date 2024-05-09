@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/08 16:01:28 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 11:17:25 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	find_final_pos(int *final_positions, int *inputs, int num_of_inputs)
 	{
 		j++;
 		while (++i < j)
-		{s
+		{
 			if (inputs[j] > inputs[i])
 			{
 				if (final_positions[i] > prior_position)
@@ -113,7 +113,7 @@ int	find_pos_of_num(t_stack *cur, int nbr)
 	return (position);
 }
 
-int	find_min(t_stack *cur)
+int	min_nbr(t_stack *cur)
 {
 	int		min_num;
 

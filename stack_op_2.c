@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:30:30 by chon              #+#    #+#             */
-/*   Updated: 2024/05/08 12:44:00 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 11:17:10 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	find_max(t_stack *cur)
+int	max_nbr(t_stack *cur)
 {
 	int		max_num;
 
