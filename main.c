@@ -6,54 +6,54 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/08 16:08:30 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:10:46 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	is_sorted(t_stack **stack)
+int is_sorted(t_stack **stack)
 {
-	t_stack	*cur;
+	t_stack *cur;
 
 	cur = *stack;
 	while (cur->fwd)
 	{
-		if (cur->num > cur->fwd->num)
+		if (cur->fin_pos > cur->fwd->fin_pos)
 			return (0);
 		cur = cur->fwd;
 	}
 	return (1);
 }
 
-int	create_stack(t_stack **stack, int *inputs, int num_of_inputs)
+int create_stack(t_stack **stack, int *inputs, int num_of_inputs)
 {
-	int	i;
-	int	*final_positions;
+	int i;
+	int *fin_poss;
 
 	i = 0;
-	final_positions = calloc(sizeof(int), num_of_inputs);
-	if (!final_positions)
+	fin_poss = calloc(sizeof(int), num_of_inputs);
+	if (!fin_poss)
 		return (0);
-	find_final_pos(final_positions, inputs, num_of_inputs);
+	fill_final_pos(fin_poss, inputs, num_of_inputs);
 	while (num_of_inputs > 0)
 	{
 		if (i == 0)
-			*stack = new_node(inputs[i], final_positions[i]);
+			*stack = new_node(inputs[i], fin_poss[i]);
 		else
-			add(stack, new_node(inputs[i], final_positions[i]), -1);
+			add(stack, new_node(inputs[i], fin_poss[i]), -1);
 		i++;
 		num_of_inputs--;
 	}
-	free(final_positions);
+	free(fin_poss);
 	return (1);
 }
 
-int	are_ints(char **array)
+int are_ints(char **array)
 {
-	int			i;
-	int			j;
-	long long	num;
+	int i;
+	int j;
+	long long num;
 
 	i = 0;
 	j = -1;
@@ -76,12 +76,12 @@ int	are_ints(char **array)
 	return (1);
 }
 
-int	*parse_inputs(int ac, char **av)
+int *parse_inputs(int ac, char **av)
 {
-	int	*inputs;
-	int	elements;
-	int	i;
-	int	j;
+	int *inputs;
+	int elements;
+	int i;
+	int j;
 
 	elements = ac - 1;
 	if (are_ints(av) == 0)
@@ -104,11 +104,11 @@ int	*parse_inputs(int ac, char **av)
 	return (inputs);
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
-	t_stack	*a_top;
-	t_stack	*b_top;
-	int		*inputs;
+	t_stack *a_top;
+	t_stack *b_top;
+	int *inputs;
 
 	a_top = NULL;
 	b_top = NULL;
@@ -122,42 +122,39 @@ int	main(int ac, char **av)
 	}
 	if (!create_stack(&a_top, inputs, ac - 1))
 		return (1);
-	// push(&a_top, &b_top, 0);
-	// push(&b_top, &a_top, 0);
-	// rev_rotate(&a_top, &b_top, 3);
-				t_stack *cur_a = a_top;
-				t_stack *cur_b = b_top;
-				while (cur_a)
-				{
-					printf("%lld | %d\n", cur_a->num, cur_a->final_position);
-					// printf("%lld ", cur_a->num);
-					cur_a = cur_a->fwd;
-				}
-				printf("\n");
-				while (cur_b)
-				{
-					printf("%lld ", cur_b->num);
-					cur_b = cur_b->fwd;
-				}
-				printf("\n");
+	t_stack *cur_a = a_top;
+	t_stack *cur_b = b_top;
+	while (cur_a)
+	{
+		// printf("%lld | %d\n", cur_a->num, cur_a->fin_pos);
+		printf("%lld ", cur_a->num);
+		cur_a = cur_a->fwd;
+	}
+	printf("\n");
+	while (cur_b)
+	{
+		printf("%lld ", cur_b->num);
+		cur_b = cur_b->fwd;
+	}
+	printf("\n");
 	if (is_sorted(&a_top) == 0)
 		sort_stack(&a_top, &b_top, ac - 1);
-				printf("\n");
-				cur_a = a_top;
-				cur_b = b_top;
-				while (cur_a)
-				{
-					printf("%lld | %d\n", cur_a->num, cur_a->final_position);
-					// printf("%lld ", cur_a->num);
-					cur_a = cur_a->fwd;
-				}
-				printf("\n");
-				while (cur_b)
-				{
-					printf("%lld ", cur_b->num);
-					cur_b = cur_b->fwd;
-				}
-				printf("\n");
+	printf("\n");
+	cur_a = a_top;
+	cur_b = b_top;
+	while (cur_a)
+	{
+		// printf("%lld | %d\n", cur_a->num, cur_a->fin_pos);
+		printf("%lld ", cur_a->num);
+		cur_a = cur_a->fwd;
+	}
+	printf("\n");
+	while (cur_b)
+	{
+		printf("%lld ", cur_b->num);
+		cur_b = cur_b->fwd;
+	}
+	printf("\n");
 	free_stack(&a_top);
 	free_stack(&b_top);
 	free(inputs);

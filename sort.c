@@ -6,121 +6,107 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 12:01:08 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:32:12 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// int	is_wrong_order(t_stack *head, t_stack *cur, int min_num, int max_num)
-// {
-// 	if (cur->fwd)
-// 		return ((cur->num != max_num && cur->num > cur->fwd->num)
-// 			|| (cur->num == max_num && cur->fwd->num != min_num));
-// 	else
-// 		return ((cur->num != max_num && cur->num < head->num)
-// 			|| (cur->num == max_num && !(cur->bwd->num == min_num
-// 			|| head->num == min_num)));
-// }
+void sort_stack_ct_3(t_stack **a, int inputs)
+{
+	int max_num;
 
-// int	ct_wrong_order(t_stack *head, t_stack *cur, int min_num, int max_num)
-// {
-// 	int		count;
+	max_num = max_nbr(*a);
+	if (find_num_in_node(*a, 0) == max_num)
+		rotate(a, NULL, 1);
+	else if (find_num_in_node(*a, 1) == max_num)
+		rev_rotate(a, NULL, 1);
+	if (is_sorted(a) == 0)
+		swap(a, NULL, 1);
+	if (inputs == 3)
+		exit(0);
+}
 
-// 	count = 0;
-// 	while (cur->fwd)
-// 	{
-// 		if (is_wrong_order(head, cur, min_num, max_num))
-// 			count++;
-// 		cur = cur->fwd;
-// 	}
-// 	return (count);
-// }
-
-void	sort_alg_1(t_stack **a, t_stack **b, t_stack_num s, int ac)
+void sort_alg_2(t_stack **a, t_stack **b, t_stack_num s, int ac)
 {
 	int trigger = 0;
+	push(a, b, 1);
+	if ((*a)->fin_pos == (*a)->fwd->fin_pos + 1)
+		swap(a, NULL, 1);
+	if (ac == 5 && (*a)->fin_pos != (*a)->fwd->fin_pos - 1)
+	{
+		push(a, b, 1);
+		sort_stack_ct_3(a, ac);
+		if (is_ordered(*b, 2))
+			swap(b, NULL, 2);
+	}
 	while (*b)
 	{
-		while (*b && ((*a)->final_position == (*b)->final_position + 1
-			|| ((*a)->num == s.min && (*b)->num == s.max)))
+		while (*b && ((*a)->fin_pos == (*b)->fin_pos + 1 || ((*a)->num == s.min && (*b)->num == s.max)))
 			push(b, a, 2);
 		if (*b)
 		{
-			if (pos_of_final_pos(*a, (*b)->final_position + 1) < round((double)ac / 2))
+			if ((*b)->num == s.max)
+				push(b, a, 2);
+			else if (find_pos_of_final_pos(*a, (*b)->fin_pos + 1) < round((double)ac / 2))
 				rotate(a, NULL, 1);
 			else
 				rev_rotate(a, NULL, 1);
 		}
 		trigger++;
 		if (trigger == 6)
-			break ;
+			break;
+	}
+	srtd_but_err(a, *a, ac, s);
+}
+
+void sort_alg_1(t_stack **a, t_stack **b, t_stack_num s, int ac)
+{
+	// int	push_num;
+
+	// push_num = find_num_in_node(*a, find_pos_of_final_pos(*a, ac));
+	// if (ac == 5)
+	// 	if (find_pos_of_final_pos(*a, ac) < find_pos_of_final_pos(*a, ac - 1))
+	// 		push_num = find_num_in_node(*a, find_pos_of_final_pos(*a, ac - 1));
+	while ((*a)->fin_pos != ac - 1)
+	{
+		if (find_pos_of_final_pos(*a, ac) < round((double)ac / 2))
+			rotate(a, NULL, 1);
+		else
+			rev_rotate(a, NULL, 1);
 	}
 }
 
-int is_ordered(t_stack *node)
+int is_ordered(t_stack *node, int num_of_nodes)
 {
 	if (!node->fwd)
 		return (1);
-	return (node->num < node->fwd->num);
-}
-
-void	sort_stack_ct_3(t_stack **a)
-{
-	int max_num;
-
-	max_num = max_nbr(*a);
-	if (num_in_node(*a, 0) == max_num)
-		rotate(a, NULL, 1);
-	else if (num_in_node(*a, 1) == max_num)
-		rev_rotate(a, NULL, 1);
-	if (is_sorted(a) == 0)
-		swap(a, NULL, 1);
+	while (--num_of_nodes > 0)
+	{
+		if (node->num < node->fwd->num)
+			return (0);
+		node = node->fwd;
+	}
+	return (1);
 }
 
 void sort_stack(t_stack **a, t_stack **b, int inputs)
 {
 	t_stack_num s;
-	t_stack *cur_a;
 
-	cur_a = *a;
+	if (inputs == 3)
+		sort_stack_ct_3(a, inputs);
 	s.max = max_nbr(*a);
 	s.min = min_nbr(*a);
-	if ((*a)->final_position == (*a)->fwd->final_position + 1)
+	if ((*a)->fin_pos > (*a)->fwd->fin_pos)
 		swap(a, NULL, 1);
 	if (srtd_but_err(a, *a, inputs, s))
-		return ;
-	if (inputs == 3)
-		sort_stack_ct_3(a);
+		return;
 	else if (inputs < 6)
 	{
-		push(a, b, 1);
-		if ((*a)->final_position == (*a)->fwd->final_position + 1)
-			swap(a, NULL, 1);
-		if (inputs == 5)
-			push(a, b, 1);
-		sort_stack_ct_3(a);
-		if (is_ordered(*b))
-			swap(b, NULL, 2);
+		// if (is_ordered(*a, 3))
 		sort_alg_1(a, b, s, inputs);
-		// int trigger = 0;
-		// while (*stack_b)
-		// {
-		// 	while (*stack_b && ((*stack_a)->final_position == (*stack_b)->final_position + 1
-		// 		|| ((*stack_a)->num == s.min && (*stack_b)->num == s.max)))
-		// 		push(stack_b, stack_a, 2);
-		// 	if (*stack_b)
-		// 	{
-		// 		if (pos_of_final_pos(*stack_a, (*stack_b)->final_position + 1)
-		// 			< round((double)inputs / 2))
-		// 			rotate(stack_a, NULL, 1);
-		// 		else
-		// 			rev_rotate(stack_a, NULL, 1);
-		// 	}
-		// 	trigger++;
-		// 	if (trigger == 6)
-		// 		break ;
-		// }
-		srtd_but_err(a, *a, inputs, s);
+		// else
+		// 	sort_alg_2(a, b, s, inputs);
 	}
 }

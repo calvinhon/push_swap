@@ -6,15 +6,29 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:30:30 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 11:17:10 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:09:38 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	max_nbr(t_stack *cur)
+int min_nbr(t_stack *cur)
 {
-	int		max_num;
+	int min_num;
+
+	min_num = cur->num;
+	while (cur)
+	{
+		if (cur->num < min_num)
+			min_num = cur->num;
+		cur = cur->fwd;
+	}
+	return (min_num);
+}
+
+int max_nbr(t_stack *cur)
+{
+	int max_num;
 
 	max_num = cur->num;
 	while (cur)
@@ -26,24 +40,9 @@ int	max_nbr(t_stack *cur)
 	return (max_num);
 }
 
-void	free_stack(t_stack **lst)
+t_stack *del_first_node(t_stack *top)
 {
-	if (*lst)
-	{
-		while ((*lst)->fwd)
-			*lst = (*lst)->fwd;
-		while ((*lst)->bwd)
-		{
-			*lst = (*lst)->bwd;
-			free((*lst)->fwd);
-		}
-		free(*lst);
-	}
-}
-
-t_stack	*del_first_node(t_stack *top)
-{
-	t_stack	*new_top;
+	t_stack *new_top;
 
 	if (!top || !(top->fwd))
 	{
@@ -56,9 +55,9 @@ t_stack	*del_first_node(t_stack *top)
 	return (new_top);
 }
 
-void	add(t_stack **head, t_stack *new_node, int position)
+void add(t_stack **head, t_stack *new_node, int position)
 {
-	t_stack	*cur;
+	t_stack *cur;
 
 	cur = *head;
 	if (position == -1)
@@ -76,15 +75,15 @@ void	add(t_stack **head, t_stack *new_node, int position)
 	}
 }
 
-t_stack	*new_node(int nbr, int position)
+t_stack *new_node(int nbr, int position)
 {
-	t_stack	*node;
+	t_stack *node;
 
 	node = (t_stack *)malloc(sizeof(t_stack));
 	if (!node)
 		return (NULL);
 	node->num = nbr;
-	node->final_position = position;
+	node->fin_pos = position;
 	node->bwd = NULL;
 	node->fwd = NULL;
 	return (node);

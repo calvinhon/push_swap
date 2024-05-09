@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 11:50:16 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:19:15 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_stack_num
 typedef struct s_stack
 {
 	long long		num;
-	int				final_position;
+	int				fin_pos;
 	struct s_stack	*bwd;
 	struct s_stack	*fwd;
 }	t_stack;
@@ -40,17 +40,17 @@ void	free_stack(t_stack **stack);
 void	sort_stack(t_stack **stack_a, t_stack **stack_b, int inputs);
 int		max_nbr(t_stack *cur);
 int		min_nbr(t_stack *cur);
-int		num_in_node(t_stack *cur, int node_pos);
+int		find_num_in_node(t_stack *cur, int node_pos);
+int		find_pos_of_num(t_stack *cur, int nbr);
+int		find_final_pos_of_num(t_stack *cur, int nbr);
+int		find_pos_of_final_pos(t_stack *cur, int fin_position);
 int		is_sorted(t_stack **stack);
 int		is_wrong_order(t_stack *head, t_stack *cur, int min_num, int max_num);
 int		find_first_err(t_stack *head, t_stack *cur, int min_num, int max_num);
 int		count_nodes(t_stack *cur);
-int		find_pos_of_num(t_stack *cur, int nbr);
-void	find_final_pos(int *final_positions, int *inputs, int num_of_inputs);
+void	fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs);
 void	print_action(int action, int stack_id);
-int		find_final_pos_of_num(t_stack *cur, int nbr);
 int		srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
-int		is_ordered(t_stack *node);
-int		pos_of_final_pos(t_stack *cur, int fin_position);
+int		is_ordered(t_stack *node, int num_of_nodes);
 
 #endif

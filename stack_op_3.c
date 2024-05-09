@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 11:17:25 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:10:28 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // int	find_first_err(t_stack *head, t_stack *cur, int min_num, int max_num)
 // {
 // 	int	node;
-	
+
 // 	node = 0;
 // 	while (cur->fwd && is_wrong_order(head, cur, min_num, max_num) == 0)
 // 	{
@@ -38,7 +38,7 @@
 // 	return (num_of_nodes);
 // }
 
-void	print_action(int action, int stack_id)
+void print_action(int action, int stack_id)
 {
 	if (action == 0)
 	{
@@ -60,12 +60,12 @@ void	print_action(int action, int stack_id)
 	}
 }
 
-void	find_final_pos(int *final_positions, int *inputs, int num_of_inputs)
+void fill_final_pos(int *fin_poss, int *inputs, int num_of_inputs)
 {
-	int	i;
-	int	j;
-	int	prior_position;
-	int	greater_switch;
+	int i;
+	int j;
+	int prior_position;
+	int greater_switch;
 
 	i = -1;
 	j = 0;
@@ -77,15 +77,15 @@ void	find_final_pos(int *final_positions, int *inputs, int num_of_inputs)
 		{
 			if (inputs[j] > inputs[i])
 			{
-				if (final_positions[i] > prior_position)
-					prior_position = final_positions[i];
+				if (fin_poss[i] > prior_position)
+					prior_position = fin_poss[i];
 				greater_switch = 1;
 			}
 			else
-				final_positions[i]++;
+				fin_poss[i]++;
 		}
 		if (greater_switch)
-			final_positions[j] = prior_position + 1;
+			fin_poss[j] = prior_position + 1;
 		prior_position = 0;
 		greater_switch = 0;
 		i = -1;
@@ -93,36 +93,40 @@ void	find_final_pos(int *final_positions, int *inputs, int num_of_inputs)
 	}
 }
 
-int	find_final_pos_of_num(t_stack *cur, int nbr)
+int srtd_but_err(t_stack **a, t_stack *cur, int ac, t_stack_num s)
 {
-	while (cur && cur->num != nbr)
-		cur = cur->fwd;
-	return (cur->final_position);
-}
+	int reverse_switch;
 
-int	find_pos_of_num(t_stack *cur, int nbr)
-{
-	int	position;
-
-	position = 0;
-	while (cur && cur->num != nbr)
+	reverse_switch = 1;
+	if (cur->fin_pos < round((double)ac / 2))
+		reverse_switch = 2;
+	while (cur->fwd)
 	{
-		position++;
+		if (cur->num == s.max)
+		{
+			if (cur->fwd->num != s.min)
+				return (0);
+		}
+		else if (cur->fin_pos != cur->fwd->fin_pos - 1)
+			return (0);
 		cur = cur->fwd;
 	}
-	return (position);
-}
-
-int	min_nbr(t_stack *cur)
-{
-	int		min_num;
-
-	min_num = cur->num;
-	while (cur)
-	{
-		if (cur->num < min_num)
-			min_num = cur->num;
-		cur = cur->fwd;
-	}
-	return (min_num);
+	int trigger = 0;
+	if (reverse_switch == 1)
+		while (!is_sorted(a))
+		{
+			rotate(a, NULL, 1);
+			trigger++;
+			if (trigger == 6)
+				break;
+		}
+	if (reverse_switch == 2)
+		while (!is_sorted(a))
+		{
+			rev_rotate(a, NULL, 1);
+			trigger++;
+			if (trigger == 6)
+				break;
+		}
+	return (1);
 }
