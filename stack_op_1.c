@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 14:09:44 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/15 12:22:38 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void push(t_stack **from, t_stack **to, int stack_id)
 	cur = (*from)->fwd;
 	*from = del_first_node(*from);
 	if (stack_id == 1)
-		ft_printf("pa\n");
-	if (stack_id == 2)
 		ft_printf("pb\n");
+	if (stack_id == 2)
+		ft_printf("pa\n");
 }
 
 void rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)

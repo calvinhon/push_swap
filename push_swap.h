@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/09 14:19:15 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/15 12:40:51 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int		find_first_err(t_stack *head, t_stack *cur, int min_num, int max_num);
 int		count_nodes(t_stack *cur);
 void	fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs);
 void	print_action(int action, int stack_id);
-int		srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
+void	srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
+int		*parse_inputs(int ac, char **av);
 
 #endif
