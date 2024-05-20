@@ -6,24 +6,30 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/15 14:09:07 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/20 15:22:12 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// int	find_first_err(t_stack *head, t_stack *cur, int min_num, int max_num)
-// {
-// 	int	node;
-
-// 	node = 0;
-// 	while (cur->fwd && is_wrong_order(head, cur, min_num, max_num) == 0)
-// 	{
-// 		node++;
-// 		cur = cur->fwd;
-// 	}
-// 	return (node);
-// }
+int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s)
+{
+	if (cur->fwd)
+	{
+		if (cur->num == s.max && cur->fwd->num == s.min)
+			return (1);
+		if (cur->num == s.min && cur->fwd->num == s.max)
+			return (2);
+	}
+	else
+	{
+		if (cur->num == s.max && (*stack)->num == s.min)
+			return (1);
+		if (cur->num == s.min && (*stack)->num == s.max)
+			return (2);
+	}
+	return (0);
+}
 
 int is_sorted(t_stack **stack)
 {
@@ -74,39 +80,6 @@ void print_action(int action, int stack_id)
 	}
 }
 
-void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
-{
-	int i;
-	int j;
-	int prior_position;
-	int greater_switch;
-
-	i = -1;
-	j = 0;
-	greater_switch = 0;
-	while (num_of_inputs > 1)
-	{
-		j++;
-		while (++i < j)
-		{
-			if (inputs[j] > inputs[i])
-			{
-				if (fin_pos[i] > prior_position)
-					prior_position = fin_pos[i];
-				greater_switch = 1;
-			}
-			else
-				fin_pos[i]++;
-		}
-		if (greater_switch)
-			fin_pos[j] = prior_position + 1;
-		prior_position = 0;
-		greater_switch = 0;
-		i = -1;
-		num_of_inputs--;
-	}
-}
-
 void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 {
 	int reverse_switch;
@@ -142,13 +115,13 @@ void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 			// if (trigger == 6)
 			// 	break;
 		}
-	t_stack *cur_a = *a;
-	printf("\n");
-	while (cur_a)
-	{
-		printf("%lld ", cur_a->num);
-		cur_a = cur_a->fwd;
-	}
-	printf("\n");
+	// t_stack *cur_a = *a;
+	// printf("\n");
+	// while (cur_a)
+	// {
+	// 	printf("%lld ", cur_a->num);
+	// 	cur_a = cur_a->fwd;
+	// }
+	// printf("\n");
 	return ;
 }

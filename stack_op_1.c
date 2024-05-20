@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/15 12:22:38 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/20 15:50:43 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	int tmp_position;
 
 	if (!*stack_1 || !(*stack_1)->fwd)
-		return;
+		return ;
 	tmp_num = (*stack_1)->num;
 	tmp_position = (*stack_1)->fin_pos;
 	(*stack_1)->num = (*stack_1)->fwd->num;
@@ -43,7 +43,7 @@ void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	if (stack_id == 3)
 	{
 		if (!*stack_2 || !(*stack_2)->fwd)
-			return;
+			return ;
 		tmp_num = (*stack_2)->num;
 		tmp_position = (*stack_2)->fin_pos;
 		(*stack_2)->num = (*stack_2)->fwd->num;

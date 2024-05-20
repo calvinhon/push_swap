@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/15 12:40:51 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/20 14:55:28 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ void	print_action(int action, int stack_id);
 void	srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
 int		*parse_inputs(int ac, char **av);
+int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s);
 
 #endif

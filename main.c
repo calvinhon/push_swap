@@ -6,11 +6,44 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/15 14:09:05 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/20 15:11:22 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
+{
+	int i;
+	int j;
+	int prior_position;
+	int greater_switch;
+
+	i = -1;
+	j = 0;
+	greater_switch = 0;
+	while (num_of_inputs > 1)
+	{
+		j++;
+		while (++i < j)
+		{
+			if (inputs[j] > inputs[i])
+			{
+				if (fin_pos[i] > prior_position)
+					prior_position = fin_pos[i];
+				greater_switch = 1;
+			}
+			else
+				fin_pos[i]++;
+		}
+		if (greater_switch)
+			fin_pos[j] = prior_position + 1;
+		prior_position = 0;
+		greater_switch = 0;
+		i = -1;
+		num_of_inputs--;
+	}
+}
 
 int create_stack(t_stack **stack, int *inputs, int num_of_inputs)
 {
