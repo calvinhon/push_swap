@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort.c                                             :+:      :+:    :+:   */
+/*   sort_1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/21 16:35:23 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/21 17:25:02 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,25 +95,32 @@ void	empty_b(t_stack **a, t_stack **b, t_stack_num s)
 		int	node_b_to_move;
 		int	best_node_b_to_move;
 		int	shift_a_to_pa;
+		int	search_fin_pos;
 		int	best_shift_a_to_pa;
+		int	shift_b_to_pa;
+		int	simult_shift;
 		cur_b = *b;
-		length_a = count_nodes(a);
+		length_a = count_nodes(*a);
 		node_b_to_move = 0;
 		while (cur_b->fwd)
 		{
-			shift_a_to_pa = find_pos_of_final_pos(*a, cur_b->fin_pos + 1);
-			if (shift_a_to_pa != -1)
+			if (cur_b->num == s.max)
+				search_fin_pos = 0;
+			else
+				search_fin_pos = cur_b->fin_pos + 1; 
+			shift_a_to_pa = moves_to_top(*a, search_fin_pos, length_a);
+			if (shift_a_to_pa < 2147483648
+				&& abs(shift_a_to_pa) < abs(best_shift_a_to_pa))
 			{
-				shift_a_to_pa = length_a / 2 - shift_a_to_pa;
-				if (shift_a_to_pa < best_shift_a_to_pa)
-				{
-					best_shift_a_to_pa = shift_a_to_pa;
-					best_node_b_to_move = node_b_to_move;
-				}
+				best_shift_a_to_pa = shift_a_to_pa;
+				best_node_b_to_move = node_b_to_move;
 			}
 			node_b_to_move++;
 			cur_b = cur_b->fwd;
 		}
+		shift_b_to_pa = moves_to_top(*b,
+			find_fin_pos_in_node(*b, best_node_b_to_move), count_nodes(*b));
+		
 		
 		cur_a = *a;
 		ra_to_pa_top = 0;

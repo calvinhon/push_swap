@@ -6,13 +6,27 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/21 15:56:02 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/21 16:55:33 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 int	switch_var = 1;
+
+int is_sorted(t_stack **stack)
+{
+	t_stack *cur;
+
+	cur = *stack;
+	while (cur->fwd)
+	{
+		if (cur->fin_pos != cur->fwd->fin_pos - 1)
+			return (0);
+		cur = cur->fwd;
+	}
+	return (1);
+}
 
 void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
 {

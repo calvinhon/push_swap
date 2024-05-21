@@ -6,11 +6,18 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/20 15:22:12 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/21 16:56:22 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	abs(int num)
+{
+	if (num < 0)
+		return (-num);
+	return (num);
+}
 
 int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s)
 {
@@ -29,20 +36,6 @@ int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s)
 			return (2);
 	}
 	return (0);
-}
-
-int is_sorted(t_stack **stack)
-{
-	t_stack *cur;
-
-	cur = *stack;
-	while (cur->fwd)
-	{
-		if (cur->fin_pos != cur->fwd->fin_pos - 1)
-			return (0);
-		cur = cur->fwd;
-	}
-	return (1);
 }
 
 int	count_nodes(t_stack *cur)

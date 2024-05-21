@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/21 15:48:46 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/21 16:56:29 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ int		is_ordered(t_stack *node, int num_of_nodes);
 int		*parse_inputs(int ac, char **av);
 int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s);
 int 	find_fin_pos_in_node(t_stack *cur, int node_pos);
+int		abs(int num);
 
 #endif
