@@ -6,11 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/20 15:11:22 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/21 15:56:02 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int	switch_var = 1;
 
 void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
 {
@@ -113,6 +115,8 @@ int main(int ac, char **av)
 	elements = ct_elements(av);
 	if (!create_stack(&a_top, inputs, elements))
 		return (1);
+				if (switch_var == 1)
+				{
 				t_stack *cur_a = a_top;
 				t_stack *cur_b = b_top;
 				while (cur_a)
@@ -127,8 +131,13 @@ int main(int ac, char **av)
 					cur_b = cur_b->fwd;
 				}
 				printf("\n");
+				}
 	if (!is_sorted(&a_top))
 		sort_stack(&a_top, &b_top, elements);
+				if (switch_var == 1)
+				{
+				t_stack *cur_a = a_top;
+				t_stack *cur_b = b_top;
 				printf("\n");
 				cur_a = a_top;
 				cur_b = b_top;
@@ -144,6 +153,7 @@ int main(int ac, char **av)
 					cur_b = cur_b->fwd;
 				}
 				printf("\n");
+				}
 	free_stack(&a_top);
 	free_stack(&b_top);
 	free(inputs);
