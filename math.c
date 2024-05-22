@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_2.c                                           :+:      :+:    :+:   */
+/*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 15:44:55 by chon             ###   ########.fr       */
+/*   Created: 2024/05/22 13:01:26 by chon              #+#    #+#             */
+/*   Updated: 2024/05/22 15:27:06 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-long	moves_to_top(t_stack *head, int fin_pos, int stack_length)
+int	min_abs(int num1, int num2)
 {
-	long	moves;
+	if (abs(num1) < abs(num2))
+		return (num1);
+	return (num2);
+}
 
-	if (count_nodes(head) == 1)
-		return (0);
-	moves = find_pos_of_final_pos(head, fin_pos);
-	if (moves != -1)
-	{
-		if (moves > round(stack_length / 2))
-			moves = -stack_length + moves;
-	}
-	else
-		moves = 2147483648;
-	return (moves);
+int	min(int num1, int num2)
+{
+	if (num1 < num2)
+		return (num1);
+	return (num2);
+}
+
+int	max(int num1, int num2)
+{
+	if (num1 > num2)
+		return (num1);
+	return (num2);
+}
+
+int	ft_abs(int num)
+{
+	if (num < 0)
+		return (-num);
+	return (num);
 }

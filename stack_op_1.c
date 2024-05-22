@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/20 15:50:43 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/22 15:31:48 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ void rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	int tmp_position;
 	t_stack *cur;
 
+	if (!*stack_1)
+		return ;
 	cur = *stack_1;
 	tmp_num = cur->num;
 	tmp_position = cur->fin_pos;
@@ -100,6 +102,8 @@ void rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	int tmp_position;
 	t_stack *cur;
 
+	if (!*stack_1)
+		return ;
 	cur = *stack_1;
 	while (cur->fwd)
 		cur = cur->fwd;

@@ -6,18 +6,16 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/21 16:56:22 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/22 14:30:30 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	abs(int num)
-{
-	if (num < 0)
-		return (-num);
-	return (num);
-}
+// void	rotate_helper(t_stack **a, t_stack **b, int rotate_switch)
+// {
+	
+// }
 
 int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s)
 {
@@ -75,11 +73,11 @@ void print_action(int action, int stack_id)
 
 void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 {
-	int reverse_switch;
+	int rotate_switch;
 
-	reverse_switch = 1;
+	rotate_switch = 1;
 	if (cur->fin_pos < round((double)inputs / 2))
-		reverse_switch = 2;
+		rotate_switch = 2;
 	while (cur->fwd)
 	{
 		if (cur->num == s.max)
@@ -92,7 +90,7 @@ void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 		cur = cur->fwd;
 	}
 	// int trigger = 0;
-	if (reverse_switch == 1)
+	if (rotate_switch == 1)
 		while (!is_sorted(a))
 		{
 			rotate(a, NULL, 1);
@@ -100,7 +98,7 @@ void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 			// if (trigger == 6)
 			// 	break;
 		}
-	if (reverse_switch == 2)
+	if (rotate_switch == 2)
 		while (!is_sorted(a))
 		{
 			rev_rotate(a, NULL, 1);
