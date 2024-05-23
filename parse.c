@@ -79,6 +79,7 @@ int	*pull_inputs(char **av, int elements)
 		split_av = ft_split(av[j++], ' ');
 		while (split_av[++k])
 			inputs[i++] = ft_atoi(split_av[k]);
+		free_char_array(split_av);
 		k = -1;
 	}
 	if (is_repeated(inputs, orig_num_of_elements))
@@ -100,11 +101,15 @@ int *parse_inputs(int ac, char **av)
 	{
 		split_av = ft_split(av[i++], ' ');
 		if (are_ints(split_av) == 0)
+		{
+			free_char_array(split_av);
 			return (NULL);
+		}
 		while (split_av[j])
 			j++;
 		elements += j;
 		j = 0;
+		free_char_array(split_av);
 	}
 	return (pull_inputs(av, elements));
 }

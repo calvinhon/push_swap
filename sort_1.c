@@ -57,59 +57,6 @@ void sort_alg_3(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 		push(b, a, 2);
 }
 
-void empty_b2(t_stack **a, t_stack **b, t_stack_num s)
-{
-	int ra_to_pa_top;
-	int rra_to_pa_top;
-	t_stack *cur_a;
-
-	if (find_fin_pos_in_node(*b, -1) == find_fin_pos_in_node(*a, -1) - 1)
-	{
-		rev_rotate(a, b, 3);
-		push(b, a, 2);
-	}
-	while (*b)
-	{
-		cur_a = *a;
-		ra_to_pa_top = 0;
-		rra_to_pa_top = 1;
-		while (cur_a->fwd && *b && (((*b)->num != s.max && (cur_a->fin_pos != (*b)->fin_pos + 1)) || ((*b)->num == s.max && cur_a->num != s.min)))
-		{
-			ra_to_pa_top++;
-			cur_a = cur_a->fwd;
-		}
-		while (cur_a->fwd)
-			cur_a = cur_a->fwd;
-		while (cur_a->bwd && *b && (((*b)->num != s.max && (cur_a->fin_pos != (*b)->fin_pos + 1)) || ((*b)->num == s.max && cur_a->num != s.min)))
-		{
-			rra_to_pa_top++;
-			cur_a = cur_a->bwd;
-		}
-		if (switch_var2 == 1)
-			printf("%d,%d\n", ra_to_pa_top, rra_to_pa_top);
-		if (rra_to_pa_top > ra_to_pa_top)
-			while (ra_to_pa_top > 0)
-			{
-				if (count_nodes(*b) == 2 && (*b)->fin_pos < (*b)->fwd->fin_pos)
-					rotate(a, b, 3);
-				else
-					rotate(a, NULL, 1);
-				ra_to_pa_top--;
-			}
-		else
-			while (rra_to_pa_top > 0)
-			{
-				if (count_nodes(*b) == 2 && (*b)->fin_pos < (*b)->fwd->fin_pos)
-					rev_rotate(a, b, 3);
-				else
-					rev_rotate(a, NULL, 1);
-				rra_to_pa_top--;
-			}
-		while (*b && ((*b)->fin_pos == (*a)->fin_pos - 1 || ((*b)->num == s.max && (*a)->num == s.min)))
-			push(b, a, 2);
-	}
-}
-
 void empty_b(t_stack **a, t_stack **b, t_stack_num s)
 {
 	t_stack *cur_b;
@@ -338,8 +285,8 @@ void sort_alg_2(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 		if (*b && (*a)->fin_pos == (*b)->fin_pos + 1)
 			push(b, a, 2);
 	}
-	// empty_b(a, b, s);
-	// srtd_but_err(a, *a, inputs, s);
+	empty_b(a, b, s);
+	srtd_but_err(a, *a, inputs, s);
 }
 
 void sort_alg_1(t_stack **a, t_stack **b, t_stack_num s, int inputs)

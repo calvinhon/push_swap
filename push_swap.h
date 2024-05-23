@@ -77,5 +77,6 @@ int		ft_abs(int num);
 int		min(int num1, int num2);
 int		max(int num1, int num2);
 long	moves_to_top(t_stack *head, int fin_pos, int stack_length);
+void	free_char_array(char **array);
 
 #endif

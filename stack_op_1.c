@@ -12,21 +12,6 @@
 
 #include "push_swap.h"
 
-void free_stack(t_stack **lst)
-{
-	if (*lst)
-	{
-		while ((*lst)->fwd)
-			*lst = (*lst)->fwd;
-		while ((*lst)->bwd)
-		{
-			*lst = (*lst)->bwd;
-			free((*lst)->fwd);
-		}
-		free(*lst);
-	}
-}
-
 void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 {
 	int tmp_num;
@@ -56,15 +41,12 @@ void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 
 void push(t_stack **from, t_stack **to, int stack_id)
 {
-	t_stack *cur;
-
 	if (!(*from))
 		return;
 	else if (!(*to))
 		*to = new_node((*from)->num, (*from)->fin_pos);
 	else
 		add(to, new_node((*from)->num, (*from)->fin_pos), 0);
-	cur = (*from)->fwd;
 	*from = del_first_node(*from);
 	if (stack_id == 1)
 		ft_printf("pb\n");

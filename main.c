@@ -169,7 +169,6 @@ int main(int ac, char **av)
 				printf("\n");
 				}
 	free_stack(&a_top);
-	free_stack(&b_top);
 	free(inputs);
 	return (0);
 }
