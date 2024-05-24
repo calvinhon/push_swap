@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 15:44:55 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/24 15:52:26 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ void empty_b2(t_stack **a, t_stack **b, t_stack_num s)
 			rra_to_pa_top++;
 			cur_a = cur_a->bwd;
 		}
-		if (switch_var2 == 1)
-			printf("%d,%d\n", ra_to_pa_top, rra_to_pa_top);
 		if (rra_to_pa_top > ra_to_pa_top)
 			while (ra_to_pa_top > 0)
 			{

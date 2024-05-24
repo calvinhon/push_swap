@@ -6,27 +6,35 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 14:30:30 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/24 14:52:42 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// void	rotate_helper(t_stack **a, t_stack **b, int rotate_switch)
-// {
-	
-// }
-
-int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s)
+int	call_swap(t_stack *head, t_stack_num s)
 {
-	if (cur->fwd)
+	return (head->fin_pos == head->fin_pos + 1
+		|| (head->num == s.max && head->fwd->num == s.min));
+}
+
+int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
+{
+	if (c == 'f' && cur->fwd)
 	{
 		if (cur->num == s.max && cur->fwd->num == s.min)
 			return (1);
 		if (cur->num == s.min && cur->fwd->num == s.max)
 			return (2);
 	}
-	else
+	else if (c == 'b' && cur->bwd)
+	{
+		if (cur->num == s.min && cur->bwd->num == s.max)
+			return (1);
+		if (cur->num == s.max && cur->bwd->num == s.min)
+			return (2);
+	}
+	else if (c == 'e')
 	{
 		if (cur->num == s.max && (*stack)->num == s.min)
 			return (1);

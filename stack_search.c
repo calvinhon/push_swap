@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 15:00:13 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/24 16:01:37 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int find_final_pos_of_num(t_stack *cur, int nbr)
 {
 	while (cur && cur->num != nbr)
 		cur = cur->fwd;
+	if (!cur)
+		return (-1);
 	return (cur->fin_pos);
 }
 

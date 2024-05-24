@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 16:04:24 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/24 15:51:41 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,17 @@
 typedef struct s_helper
 {
 	int		length_a;
+	int		length_b;
 	int		initiate_tracker;
 	int		search_fin_pos;
+	int		rotate_a;
+	int		rev_rotate_a;
+	int		node_a_to_move;
+	int		best_node_a_to_move;
+	long	shift_a_to_pb;
+	int		best_shift_a_to_pb;
+	long	shift_b_to_pb;
+	int		best_shift_b_to_pb;
 	int		node_b_to_move;
 	int		best_node_b_to_move;
 	long	shift_a_to_pa;
@@ -71,12 +80,13 @@ void	print_action(int action, int stack_id);
 void	srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
 int		*parse_inputs(int ac, char **av);
-int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s);
+int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c);
 int 	find_fin_pos_in_node(t_stack *cur, int node_pos);
 int		ft_abs(int num);
 int		min(int num1, int num2);
 int		max(int num1, int num2);
 long	moves_to_top(t_stack *head, int fin_pos, int stack_length);
 void	free_char_array(char **array);
+int		call_swap(t_stack *head, t_stack_num s);
 
 #endif
