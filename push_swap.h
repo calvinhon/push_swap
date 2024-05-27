@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 14:25:50 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 16:05:04 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@ typedef struct s_helper
 	int		best_shift_to;
 	long	shift_from;
 	int		best_shift_from;
+	int		flip_from;
+	int		flip_to;
 	int		ffffffjifejfiejfaeiofpaepoifjaewpoejafe;
 	int		length_a;
 	int		length_b;
 	int		initiate_tracker;
 	int		search_fin_pos;
-	int		rotate_a;
+	int		rotate;
 	int		rev_rotate_a;
 	int		node_a_to_move;
 	int		best_node_a_to_move;
@@ -99,5 +101,6 @@ int		max(int num1, int num2);
 long	moves_to_top(t_stack *head, int fin_pos, int stack_length);
 void	free_char_array(char **array);
 int		call_swap(t_stack *head, t_stack_num s);
+void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order);
 
 #endif

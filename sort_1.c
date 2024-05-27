@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 15:15:03 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 16:07:47 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,56 +163,6 @@ void empty_b(t_stack **a, t_stack **b, t_stack_num s)
 	}
 }
 
-void rotate_one_stack(t_stack **a, t_stack *cur_a, t_stack_num s)
-{
-	t_helper h;
-
-	h.rotate_a = 1;
-	h.rev_rotate_a = 1;
-	while (cur_a->fwd && (cur_a->bwd->num < cur_a->num || is_max_min_order(a, cur_a, s, 'b')))
-	{
-		h.rotate_a++;
-		cur_a = cur_a->fwd;
-	}
-	while (cur_a->fwd)
-		cur_a = cur_a->fwd;
-	if (cur_a->fin_pos < (*a)->fin_pos && !is_max_min_order(a, cur_a, s, 'e'))
-		while (cur_a->bwd && (cur_a->bwd->num < cur_a->num || is_max_min_order(a, cur_a, s, 'b')))
-		{
-			h.rev_rotate_a++;
-			cur_a = cur_a->bwd;
-		}
-	if (h.rotate_a < h.rev_rotate_a)
-		while (--h.rotate_a > -1)
-			rotate(a, NULL, 1);
-	else
-		while (--h.rev_rotate_a > -1)
-			rev_rotate(a, NULL, 1);
-}
-
-void push_two_nums(t_stack **a, t_stack **b, t_stack_num s)
-{
-	t_stack *cur_a;
-
-	while (count_nodes(*b) != 2)
-	{
-		if ((*a)->fin_pos > (*a)->fwd->fin_pos + 1 && !is_max_min_order(a, *a, s, 'f'))
-			push(a, b, 1);
-		else if (is_max_min_order(a, *a, s, 'f') == 2 || (*a)->fin_pos == (*a)->fwd->fin_pos + 1)
-			swap(a, b, 1);
-		if (count_nodes(*b) == 2)
-			break;
-		cur_a = (*a)->fwd;
-		rotate_one_stack(a, cur_a, s);
-		if (call_swap(*a, s))
-			swap(a, NULL, 1);
-		else
-			push(a, b, 1);
-	}
-	if (call_swap(*b, s))
-		swap(b, NULL, 2);
-}
-
 int shift_helper(t_stack *cur_from, t_stack **to, int order)
 {
 	t_helper h;
@@ -220,7 +170,6 @@ int shift_helper(t_stack *cur_from, t_stack **to, int order)
 	h.cur_to = *to;
 	h.shift_to = 0;
 	if (!order)
-	{
 		while (h.cur_to)
 		{
 			if (cur_from->num < min_nbr(*to) && h.cur_to->num == max_nbr(*to))
@@ -232,7 +181,6 @@ int shift_helper(t_stack *cur_from, t_stack **to, int order)
 				break;
 			h.cur_to = h.cur_to->fwd;
 		}
-	}
 	return (h.shift_to);
 }
 
@@ -246,7 +194,7 @@ void find_best_moves(t_helper *h)
 	else if (h->shift_to < 0 && h->shift_from < 0)
 	{
 		h->combined_moves = min(h->shift_to, h->shift_from);
-		h->rotate_switch = 2;
+		h->rotate_switch = -1;
 	}
 	else
 	{
@@ -270,11 +218,18 @@ void find_best_moves(t_helper *h)
 
 void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h)
 {
+	h.flip_from = -1;
+	h.flip_to = -1;
+	if (h.best_shift_from > 0)
+		h.flip_from = 1;
+	if (h.best_shift_to > 0)
+		h.flip_to = 1;	
 	if (h.best_rotate_switch == 0)
 	{
-		if (h.best_shift_to > 0)
+		h.best_shift_to = ft_abs(h.best_shift_to);
+		h.best_shift_from = ft_abs(h.best_shift_from);
 			while (--h.best_shift_to > -1)
-				rotate(to, NULL, 2);
+				rotate_choose(to, NULL, 2, );
 		else
 			while (++h.best_shift_to < 1)
 				rev_rotate(to, NULL, 2);
@@ -284,33 +239,49 @@ void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h)
 		else
 			while (++h.best_shift_from < 1)
 				rev_rotate(from, NULL, 1);
-	}
-	else if (h.best_rotate_switch == 1)
-	{
-		h.simult_rotate = min(h.best_shift_to, h.best_shift_from);
-		while (--h.simult_rotate > -1)
-			rotate(from, to, 3);
-		h.simult_rotate = ft_abs(h.best_shift_to - h.best_shift_from);
-		while (--h.simult_rotate > -1)
-		{
-			if (h.best_shift_to > h.best_shift_from)
-				rotate(to, NULL, 2);
-			else
-				rotate(from, NULL, 1);
-		}
+		// if (h.best_shift_to > 0)
+		// 	while (--h.best_shift_to > -1)
+		// 		rotate(to, NULL, 2);
+		// else
+		// 	while (++h.best_shift_to < 1)
+		// 		rev_rotate(to, NULL, 2);
+		// if (h.best_shift_from > 0)
+		// 	while (--h.best_shift_from > -1)
+		// 		rotate(from, NULL, 1);
+		// else
+		// 	while (++h.best_shift_from < 1)
+		// 		rev_rotate(from, NULL, 1);
 	}
 	else
 	{
-		h.simult_rotate = max(h.best_shift_to, h.best_shift_from);
-		while (++h.simult_rotate < 1)
-			rev_rotate(from, to, 3);
-		h.simult_rotate = -ft_abs(h.best_shift_to - h.best_shift_from);
-		while (++h.simult_rotate < 1)
+		if (h.best_rotate_switch == 1)
 		{
-			if (h.best_shift_to < h.best_shift_from)
-				rev_rotate(to, NULL, 2);
-			else
-				rev_rotate(from, NULL, 1);
+			h.simult_rotate = min(ft_abs(h.best_shift_to), ft_abs(h.best_shift_from));
+			while (--h.simult_rotate > -1)
+				rotate_choose(from, to, 3, h.best_rotate_switch);
+			h.rotate = ft_abs(h.best_shift_to - h.best_shift_from);
+			while (--h.rotate > -1)
+			{
+				if ((h.best_rotate_switch && h.best_shift_to > h.best_shift_from)
+					|| (h.best_rotate_switch == -1 && h.best_shift_to < h.best_shift_from))
+					rotate_choose(to, NULL, 2, h.best_rotate_switch);
+				else
+					rotate_choose(from, NULL, 1, h.best_rotate_switch);
+			}
+		}
+		else
+		{
+			h.simult_rotate = max(h.best_shift_to, h.best_shift_from);
+			while (++h.simult_rotate < 1)
+				rev_rotate(from, to, 3);
+			h.rotate = -ft_abs(h.best_shift_to - h.best_shift_from);
+			while (++h.rotate < 1)
+			{
+				if (h.best_shift_to < h.best_shift_from)
+					rev_rotate(to, NULL, 2);
+				else
+					rev_rotate(from, NULL, 1);
+			}
 		}
 	}
 }
@@ -344,7 +315,6 @@ void empty_stack(t_stack **from, t_stack **to, int order)
 
 void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 {
-	// push_two_nums(a, b, s);
 	push(a, b, 1);
 	push(a, b, 1);
 	while (count_nodes(*a) > 3)

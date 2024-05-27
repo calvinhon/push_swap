@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/22 15:31:48 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 15:41:53 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,12 @@ void rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 		ft_printf("rrb\n");
 	else if (stack_id == 3)
 		ft_printf("rrr\n");
+}
+
+void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order)
+{
+	if (order)
+		rotate(s1, s2, stack_id);
+	else
+		rev_rotate(s1, s2, stack_id);
 }
