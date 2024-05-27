@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/24 14:52:42 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 13:58:29 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	call_swap(t_stack *head, t_stack_num s)
 {
 	return (head->fin_pos == head->fin_pos + 1
-		|| (head->num == s.max && head->fwd->num == s.min));
+		|| is_max_min_order(NULL, head, s, 'f') == 2);
 }
 
 int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
@@ -57,7 +57,7 @@ int	count_nodes(t_stack *cur)
 	return (num_of_nodes);
 }
 
-void print_action(int action, int stack_id)
+void	print_action(int action, int stack_id)
 {
 	if (action == 0)
 	{
@@ -79,9 +79,9 @@ void print_action(int action, int stack_id)
 	}
 }
 
-void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
+void	srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 {
-	int rotate_switch;
+	int	rotate_switch;
 
 	rotate_switch = 1;
 	if (cur->fin_pos < round((double)inputs / 2))
@@ -97,30 +97,11 @@ void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 			return ;
 		cur = cur->fwd;
 	}
-	// int trigger = 0;
 	if (rotate_switch == 1)
 		while (!is_sorted(a))
-		{
 			rotate(a, NULL, 1);
-			// trigger++;
-			// if (trigger == 6)
-			// 	break;
-		}
 	if (rotate_switch == 2)
 		while (!is_sorted(a))
-		{
 			rev_rotate(a, NULL, 1);
-			// trigger++;
-			// if (trigger == 6)
-			// 	break;
-		}
-	// t_stack *cur_a = *a;
-	// printf("\n");
-	// while (cur_a)
-	// {
-	// 	printf("%lld ", cur_a->num);
-	// 	cur_a = cur_a->fwd;
-	// }
-	// printf("\n");
 	return ;
 }

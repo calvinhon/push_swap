@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/24 16:01:37 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 14:05:55 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int find_fin_pos_in_node(t_stack *cur, int node_pos)
 {
-	// printf("%d:%lld\n", node_pos, cur->num);
 	if (node_pos < 0)
 	{
 		while (cur->fwd)

@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/24 15:51:41 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/27 14:25:50 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,33 @@
 
 # include "libft/libft.h"
 
+typedef struct s_stack_num
+{
+	int	min;
+	int	max;
+}	t_stack_num;
+
+typedef struct s_stack
+{
+	long long		num;
+	int				fin_pos;
+	struct s_stack	*bwd;
+	struct s_stack	*fwd;
+}	t_stack;
+
 typedef struct s_helper
 {
+	t_stack	*cur_from;
+	t_stack	*cur_to;
+	int		length_from;
+	int		length_to;
+	int		node_from;
+	int		best_node_from;
+	long	shift_to;
+	int		best_shift_to;
+	long	shift_from;
+	int		best_shift_from;
+	int		ffffffjifejfiejfaeiofpaepoifjaewpoejafe;
 	int		length_a;
 	int		length_b;
 	int		initiate_tracker;
@@ -41,20 +66,6 @@ typedef struct s_helper
 	int		best_rotate_switch;
 	int		simult_rotate;
 }	t_helper;
-
-typedef struct s_stack_num
-{
-	int	min;
-	int	max;
-}	t_stack_num;
-
-typedef struct s_stack
-{
-	long long		num;
-	int				fin_pos;
-	struct s_stack	*bwd;
-	struct s_stack	*fwd;
-}	t_stack;
 
 void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id);
 void	push(t_stack **from, t_stack **to, int stack_id);
