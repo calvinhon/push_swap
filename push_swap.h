@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 16:05:04 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 13:56:35 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_helper
 	int		best_shift_to;
 	long	shift_from;
 	int		best_shift_from;
-	int		flip_from;
-	int		flip_to;
+	int		order_from;
+	int		order_to;
 	int		ffffffjifejfiejfaeiofpaepoifjaewpoejafe;
 	int		length_a;
 	int		length_b;

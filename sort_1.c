@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 16:07:47 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 14:19:56 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int switch_var2 = 0;
+int switch_var2 = 1;
 
 void sort_stack_ct_3(t_stack **a)
 {
@@ -175,9 +175,11 @@ int shift_helper(t_stack *cur_from, t_stack **to, int order)
 			if (cur_from->num < min_nbr(*to) && h.cur_to->num == max_nbr(*to))
 				break;
 			h.shift_to++;
-			if (cur_from->num > max_nbr(*to) && h.cur_to->num == min_nbr(*to) && h.cur_to->fwd && h.cur_to->fwd->num == max_nbr(*to))
+			if (cur_from->num > max_nbr(*to) && h.cur_to->num == min_nbr(*to)
+				&& h.cur_to->fwd && h.cur_to->fwd->num == max_nbr(*to))
 				break;
-			else if (h.cur_to->fwd && cur_from->num < h.cur_to->num && cur_from->num > h.cur_to->fwd->num)
+			else if (h.cur_to->fwd && cur_from->num < h.cur_to->num
+				&& cur_from->num > h.cur_to->fwd->num)
 				break;
 			h.cur_to = h.cur_to->fwd;
 		}
@@ -218,70 +220,29 @@ void find_best_moves(t_helper *h)
 
 void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h)
 {
-	h.flip_from = -1;
-	h.flip_to = -1;
-	if (h.best_shift_from > 0)
-		h.flip_from = 1;
-	if (h.best_shift_to > 0)
-		h.flip_to = 1;	
+	h.order_to = -1 + 2 * (h.best_shift_to > 0);
+	h.order_from = -1 + 2 * (h.best_shift_from > 0);
 	if (h.best_rotate_switch == 0)
 	{
 		h.best_shift_to = ft_abs(h.best_shift_to);
 		h.best_shift_from = ft_abs(h.best_shift_from);
-			while (--h.best_shift_to > -1)
-				rotate_choose(to, NULL, 2, );
-		else
-			while (++h.best_shift_to < 1)
-				rev_rotate(to, NULL, 2);
-		if (h.best_shift_from > 0)
-			while (--h.best_shift_from > -1)
-				rotate(from, NULL, 1);
-		else
-			while (++h.best_shift_from < 1)
-				rev_rotate(from, NULL, 1);
-		// if (h.best_shift_to > 0)
-		// 	while (--h.best_shift_to > -1)
-		// 		rotate(to, NULL, 2);
-		// else
-		// 	while (++h.best_shift_to < 1)
-		// 		rev_rotate(to, NULL, 2);
-		// if (h.best_shift_from > 0)
-		// 	while (--h.best_shift_from > -1)
-		// 		rotate(from, NULL, 1);
-		// else
-		// 	while (++h.best_shift_from < 1)
-		// 		rev_rotate(from, NULL, 1);
+		while (--h.best_shift_to > -1)
+			rotate_choose(to, NULL, 2, h.order_to);
+		while (--h.best_shift_from > -1)
+			rotate_choose(from, NULL, 1, h.order_from);
 	}
 	else
 	{
-		if (h.best_rotate_switch == 1)
+		h.simult_rotate = min(ft_abs(h.best_shift_to), ft_abs(h.best_shift_from));
+		while (--h.simult_rotate > -1)
+			rotate_choose(from, to, 3, h.order_to);
+		h.rotate = ft_abs(h.best_shift_to - h.best_shift_from);
+		while (--h.rotate > -1)
 		{
-			h.simult_rotate = min(ft_abs(h.best_shift_to), ft_abs(h.best_shift_from));
-			while (--h.simult_rotate > -1)
-				rotate_choose(from, to, 3, h.best_rotate_switch);
-			h.rotate = ft_abs(h.best_shift_to - h.best_shift_from);
-			while (--h.rotate > -1)
-			{
-				if ((h.best_rotate_switch && h.best_shift_to > h.best_shift_from)
-					|| (h.best_rotate_switch == -1 && h.best_shift_to < h.best_shift_from))
-					rotate_choose(to, NULL, 2, h.best_rotate_switch);
-				else
-					rotate_choose(from, NULL, 1, h.best_rotate_switch);
-			}
-		}
-		else
-		{
-			h.simult_rotate = max(h.best_shift_to, h.best_shift_from);
-			while (++h.simult_rotate < 1)
-				rev_rotate(from, to, 3);
-			h.rotate = -ft_abs(h.best_shift_to - h.best_shift_from);
-			while (++h.rotate < 1)
-			{
-				if (h.best_shift_to < h.best_shift_from)
-					rev_rotate(to, NULL, 2);
-				else
-					rev_rotate(from, NULL, 1);
-			}
+			if (ft_abs(h.best_shift_to) > ft_abs(h.best_shift_from))
+				rotate_choose(to, NULL, 2, h.order_to);
+			else
+				rotate_choose(from, NULL, 1, h.order_to);
 		}
 	}
 }
@@ -300,21 +261,22 @@ void empty_stack(t_stack **from, t_stack **to, int order)
 		h.shift_to = shift_helper(h.cur_from, to, order);
 		if (h.shift_to > round(h.length_to / 2))
 			h.shift_to = -h.length_to + h.shift_to;
+		h.shift_from = h.node_from;
 		if (h.node_from > round(h.length_from / 2))
 			h.shift_from = -h.length_from + h.node_from;
-		else
-			h.shift_from = h.node_from;
 		find_best_moves(&h);
 		h.node_from++;
 		h.cur_to = *to;
 		h.cur_from = h.cur_from->fwd;
 	}
 	rotate_two_stacks(from, to, h);
-	push(from, to, 1);
+	push(from, to, 1 - order);
 }
 
 void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 {
+	(void)inputs;
+	(void)s;
 	push(a, b, 1);
 	push(a, b, 1);
 	while (count_nodes(*a) > 3)
@@ -340,7 +302,8 @@ void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 		empty_stack(a, b, 0);
 	}
 	sort_stack_ct_3(a);
-	empty_b(a, b, s);
+	// empty_b(a, b, s);
+	empty_stack(b, a, -1);
 	srtd_but_err(a, *a, inputs, s);
 }
 
