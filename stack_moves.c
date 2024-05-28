@@ -6,16 +6,16 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 14:02:58 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 16:04:25 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 {
-	int tmp_num;
-	int tmp_position;
+	int	tmp_num;
+	int	tmp_position;
 
 	if (!*stack_1 || !(*stack_1)->fwd)
 		return ;
@@ -39,10 +39,10 @@ void swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	print_action(0, stack_id);
 }
 
-void push(t_stack **from, t_stack **to, int stack_id)
+void	push(t_stack **from, t_stack **to, int stack_id)
 {
 	if (!(*from))
-		return;
+		return ;
 	else if (!(*to))
 		*to = new_node((*from)->num, (*from)->fin_pos);
 	else
@@ -54,11 +54,11 @@ void push(t_stack **from, t_stack **to, int stack_id)
 		ft_printf("pa\n");
 }
 
-void rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 {
-	int tmp_num;
-	int tmp_position;
-	t_stack *cur;
+	int		tmp_num;
+	int		tmp_position;
+	t_stack	*cur;
 
 	if (!*stack_1)
 		return ;
@@ -78,11 +78,11 @@ void rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	print_action(1, stack_id);
 }
 
-void rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 {
-	int tmp_num;
-	int tmp_position;
-	t_stack *cur;
+	int		tmp_num;
+	int		tmp_position;
+	t_stack	*cur;
 
 	if (!*stack_1)
 		return ;
@@ -103,10 +103,8 @@ void rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 		rev_rotate(stack_2, NULL, 0);
 	if (stack_id == 1)
 		ft_printf("rra\n");
-	else if (stack_id == 2)
-		ft_printf("rrb\n");
-	else if (stack_id == 3)
-		ft_printf("rrr\n");
+	else
+		print_action(2, stack_id);
 }
 
 void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order)

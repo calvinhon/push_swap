@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 14:18:46 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 15:55:19 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	switch_var = 1;
+int	switch_var = 0;
 
 int is_sorted(t_stack **stack)
 {

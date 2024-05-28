@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 14:05:55 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 15:59:51 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int find_fin_pos_in_node(t_stack *cur, int node_pos)
+int	find_fin_pos_in_node(t_stack *cur, int node_pos)
 {
 	if (node_pos < 0)
 	{
@@ -22,29 +22,33 @@ int find_fin_pos_in_node(t_stack *cur, int node_pos)
 			cur = cur->bwd;
 	}
 	else
+	{
 		while (node_pos > 0)
 		{
 			cur = cur->fwd;
 			node_pos--;
 		}
+	}
 	return (cur->fin_pos);
 }
 
-int find_num_in_node(t_stack *cur, int node_pos)
+int	find_num_in_node(t_stack *cur, int node_pos)
 {
 	if (node_pos == -1)
 		while (cur->fwd)
 			cur = cur->fwd;
 	else
+	{
 		while (node_pos > 0)
 		{
 			cur = cur->fwd;
 			node_pos--;
 		}
+	}
 	return (cur->num);
 }
 
-int find_final_pos_of_num(t_stack *cur, int nbr)
+int	find_final_pos_of_num(t_stack *cur, int nbr)
 {
 	while (cur && cur->num != nbr)
 		cur = cur->fwd;
@@ -53,9 +57,9 @@ int find_final_pos_of_num(t_stack *cur, int nbr)
 	return (cur->fin_pos);
 }
 
-int find_pos_of_num(t_stack *cur, int nbr)
+int	find_pos_of_num(t_stack *cur, int nbr)
 {
-	int position;
+	int	position;
 
 	position = 0;
 	while (cur && cur->num != nbr)
@@ -66,9 +70,9 @@ int find_pos_of_num(t_stack *cur, int nbr)
 	return (position);
 }
 
-int find_pos_of_final_pos(t_stack *cur, int fin_position)
+int	find_pos_of_final_pos(t_stack *cur, int fin_position)
 {
-	int position;
+	int	position;
 
 	position = 0;
 	while (cur && cur->fin_pos != fin_position)

@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/27 13:58:29 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 16:04:29 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ void	print_action(int action, int stack_id)
 			ft_printf("rb\n");
 		else if (stack_id == 3)
 			ft_printf("rr\n");
+	}
+	if (action == 2)
+	{
+		if (stack_id == 2)
+			ft_printf("rrb\n");
+		else if (stack_id == 3)
+			ft_printf("rrr\n");
 	}
 }
 

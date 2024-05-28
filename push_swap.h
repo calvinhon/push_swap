@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 13:56:35 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/28 16:22:37 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,12 @@ typedef struct s_helper
 	int		best_shift_from;
 	int		order_from;
 	int		order_to;
-	int		ffffffjifejfiejfaeiofpaepoifjaewpoejafe;
-	int		length_a;
-	int		length_b;
-	int		initiate_tracker;
-	int		search_fin_pos;
-	int		rotate;
-	int		rev_rotate_a;
-	int		node_a_to_move;
-	int		best_node_a_to_move;
-	long	shift_a_to_pb;
-	int		best_shift_a_to_pb;
-	long	shift_b_to_pb;
-	int		best_shift_b_to_pb;
-	int		node_b_to_move;
-	int		best_node_b_to_move;
-	long	shift_a_to_pa;
-	int		best_shift_a_to_pa;
-	int		shift_b_to_pa;
-	int		best_shift_b_to_pa;
 	int		combined_moves;
 	long	best_combined_moves;
+	int		rotate;
 	int		rotate_switch;
 	int		best_rotate_switch;
-	int		simult_rotate;
+	int		rotate_both;
 }	t_helper;
 
 void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id);
@@ -94,7 +76,7 @@ void	srtd_but_err(t_stack **stack_a, t_stack *cur, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
 int		*parse_inputs(int ac, char **av);
 int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c);
-int 	find_fin_pos_in_node(t_stack *cur, int node_pos);
+int		find_fin_pos_in_node(t_stack *cur, int node_pos);
 int		ft_abs(int num);
 int		min(int num1, int num2);
 int		max(int num1, int num2);
@@ -102,5 +84,7 @@ long	moves_to_top(t_stack *head, int fin_pos, int stack_length);
 void	free_char_array(char **array);
 int		call_swap(t_stack *head, t_stack_num s);
 void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order);
+void	sort_stack_ct_3(t_stack **a);
+void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs);
 
 #endif
