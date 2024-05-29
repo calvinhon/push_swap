@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 16:39:35 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/29 13:24:19 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int switch_var2 = 0;
 
-void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
+void	rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
 {
 	h.order_to = -1 + 2 * (h.best_shift_to > 0);
 	h.order_from = -1 + 2 * (h.best_shift_from > 0);
@@ -43,7 +43,7 @@ void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
 	}
 }
 
-void find_best_moves(t_helper *h)
+void	find_best_moves(t_helper *h)
 {
 	if (h->shift_to > 0 && h->shift_from > 0)
 	{
@@ -75,44 +75,55 @@ void find_best_moves(t_helper *h)
 	}
 }
 
-void shift_helper(t_stack *cur_from, t_stack **to, int order, t_helper *h)
+void	shift_helper(t_stack *from, int order, t_helper *h)
 {
-	while (h->cur_to)
+	while (h->c_to)
 	{
 		if (!order)
 		{
-			if (cur_from->num < min_nbr(*to) && h->cur_to->num == max_nbr(*to))
-				break;
 			h->shift_to++;
-			if ((cur_from->num > max_nbr(*to) && h->cur_to->num == min_nbr(*to) && h->cur_to->fwd && h->cur_to->fwd->num == max_nbr(*to)) || ((h->cur_to->fwd && cur_from->num < h->cur_to->num && cur_from->num > h->cur_to->fwd->num)))
-				break;
+			if (h->c_to->fwd && ((from->num > h->max_to && h->c_to->num
+						== h->min_to && h->c_to->fwd->num == h->max_to)
+					|| ((from->num < h->c_to->num
+							&& from->num > h->c_to->fwd->num))
+					|| (from->num < h->min_to
+						&& h->c_to->fwd->num == h->max_to)))
+				break ;
 		}
 		else
 		{
-			if (h->cur_to->bwd && cur_from->num > max_nbr(*to) && h->cur_to->num == min_nbr(*to) && h->cur_to->bwd->num == max_nbr(*to))
-				break;
+			if ((from->num > h->max_to && h->c_to->num == h->min_to)
+				|| (h->c_to->bwd && ((from->num < h->min_to
+							&& h->c_to->bwd->num == h->max_to)
+						|| (from->num > h->c_to->bwd->num
+							&& from->num < h->c_to->num))))
+				break ;
 			h->shift_to++;
-			if ((cur_from->num < min_nbr(*to) && h->cur_to->num == max_nbr(*to)) || (h->cur_to->fwd && cur_from->num > h->cur_to->num && cur_from->num < h->cur_to->fwd->num))
-				break;
 		}
-		h->cur_to = h->cur_to->fwd;
+		h->c_to = h->c_to->fwd;
 	}
 }
 
-void empty_stack(t_stack **from, t_stack **to, int order)
-{
-	t_helper h;
+// void	shift_helper2(t_stack *from, int order, t_helper *h)
+// {
+// 	if (!order)
+// 		if (find_final)
+// }
 
-	h.cur_from = *from;
+void	empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
+{
+	h.c_from = *from;
 	h.node_from = 0;
-	h.best_combined_moves = 2147483647;
 	h.length_from = count_nodes(*from);
 	h.length_to = count_nodes(*to);
-	while (h.cur_from)
+	while (h.c_from)
 	{
 		h.shift_to = 0;
-		h.cur_to = *to;
-		shift_helper(h.cur_from, to, order, &h);
+		h.c_to = *to;
+		h.min_to = min_nbr(*to);
+		h.max_to = max_nbr(*to);
+		shift_helper(h.c_from, order, &h);
+		// shift_helper2();
 		if (h.shift_to > round(h.length_to / 2))
 			h.shift_to = -h.length_to + h.shift_to;
 		h.shift_from = h.node_from;
@@ -120,9 +131,9 @@ void empty_stack(t_stack **from, t_stack **to, int order)
 			h.shift_from = -h.length_from + h.node_from;
 		find_best_moves(&h);
 		if (h.best_combined_moves < 1)
-			break;
+			break ;
 		h.node_from++;
-		h.cur_from = h.cur_from->fwd;
+		h.c_from = h.c_from->fwd;
 	}
 	rotate_two_stacks(from, to, h, order);
 	push(from, to, 1 - order);
@@ -147,14 +158,22 @@ void empty_stack(t_stack **from, t_stack **to, int order)
 	}
 }
 
-void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
+void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 {
+	t_helper	h;
+	
 	push(a, b, 1);
 	push(a, b, 1);
 	while (count_nodes(*a) > 3)
-		empty_stack(a, b, 0);
+	{
+		h.best_combined_moves = 2147483647;
+		empty_stack(a, b, 0, h);
+	}
 	sort_stack_ct_3(a);
 	while (*b)
-		empty_stack(b, a, -1);
+	{
+		h.best_combined_moves = 2147483647;
+		empty_stack(b, a, -1, h);
+	}
 	srtd_but_err(a, *a, inputs, s);
 }

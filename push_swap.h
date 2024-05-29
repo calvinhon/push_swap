@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 16:22:37 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/29 12:08:53 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ typedef struct s_stack
 
 typedef struct s_helper
 {
-	t_stack	*cur_from;
-	t_stack	*cur_to;
+	t_stack	*c_from;
+	t_stack	*c_to;
 	int		length_from;
 	int		length_to;
+	int		min_to;
+	int		max_to;
 	int		node_from;
 	int		best_node_from;
 	long	shift_to;
