@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_1.c                                           :+:      :+:    :+:   */
+/*   simple_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 15:23:08 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/29 13:46:39 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	simple_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 			push(b, a, 2);
 		if (*b)
 		{
-			if (find_pos_of_final_pos(*a, (*b)->fin_pos + 1)
+			if (idx_of_fin_pos(*a, (*b)->fin_pos + 1)
 				< round((double)count_nodes(*a) / 2))
 				rotate(a, NULL, 1);
 			else

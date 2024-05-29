@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 15:59:51 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/29 14:54:06 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ int	find_final_pos_of_num(t_stack *cur, int nbr)
 	return (cur->fin_pos);
 }
 
-int	find_pos_of_num(t_stack *cur, int nbr)
+long	idx_of_num(t_stack *cur, int nbr)
 {
-	int	position;
+	long	position;
 
 	position = 0;
 	while (cur && cur->num != nbr)
@@ -67,12 +67,14 @@ int	find_pos_of_num(t_stack *cur, int nbr)
 		position++;
 		cur = cur->fwd;
 	}
+	if (!cur)
+		position = 2147483648;
 	return (position);
 }
 
-int	find_pos_of_final_pos(t_stack *cur, int fin_position)
+long	idx_of_fin_pos(t_stack *cur, int fin_position)
 {
-	int	position;
+	long	position;
 
 	position = 0;
 	while (cur && cur->fin_pos != fin_position)
@@ -81,6 +83,6 @@ int	find_pos_of_final_pos(t_stack *cur, int fin_position)
 		cur = cur->fwd;
 	}
 	if (!cur)
-		position = -1;
+		position = 2147483648;
 	return (position);
 }

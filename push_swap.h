@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/05/29 12:08:53 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/29 14:58:01 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_helper
 	t_stack	*c_to;
 	int		length_from;
 	int		length_to;
+	int		min;
+	int		max;
 	int		min_to;
 	int		max_to;
 	int		node_from;
@@ -65,9 +67,9 @@ void	sort_stack(t_stack **stack_a, t_stack **stack_b, int inputs);
 int		max_nbr(t_stack *cur);
 int		min_nbr(t_stack *cur);
 int		find_num_in_node(t_stack *cur, int node_pos);
-int		find_pos_of_num(t_stack *cur, int nbr);
+long	idx_of_num(t_stack *cur, int nbr);
 int		find_final_pos_of_num(t_stack *cur, int nbr);
-int		find_pos_of_final_pos(t_stack *cur, int fin_position);
+long	idx_of_fin_pos(t_stack *cur, int fin_position);
 int		is_sorted(t_stack **stack);
 int		is_wrong_order(t_stack *head, t_stack *cur, int min_num, int max_num);
 int		find_first_err(t_stack *head, t_stack *cur, int min_num, int max_num);
@@ -80,8 +82,8 @@ int		*parse_inputs(int ac, char **av);
 int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c);
 int		find_fin_pos_in_node(t_stack *cur, int node_pos);
 int		ft_abs(int num);
-int		min(int num1, int num2);
-int		max(int num1, int num2);
+long	min(long num1, long num2);
+long	max(long num1, long num2);
 long	moves_to_top(t_stack *head, int fin_pos, int stack_length);
 void	free_char_array(char **array);
 int		call_swap(t_stack *head, t_stack_num s);
