@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/29 14:54:06 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/31 16:25:48 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,6 @@ int	find_num_in_node(t_stack *cur, int node_pos)
 		}
 	}
 	return (cur->num);
-}
-
-int	find_final_pos_of_num(t_stack *cur, int nbr)
-{
-	while (cur && cur->num != nbr)
-		cur = cur->fwd;
-	if (!cur)
-		return (-1);
-	return (cur->fin_pos);
 }
 
 long	idx_of_num(t_stack *cur, int nbr)

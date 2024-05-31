@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_op_3.c                                       :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 16:04:29 by chon             ###   ########.fr       */
+/*   Updated: 2024/05/31 16:26:45 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	call_swap(t_stack *head, t_stack_num s)
-{
-	return (head->fin_pos == head->fin_pos + 1
-		|| is_max_min_order(NULL, head, s, 'f') == 2);
-}
-
-int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
+int is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
 {
 	if (c == 'f' && cur->fwd)
 	{
@@ -44,9 +38,9 @@ int	is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
 	return (0);
 }
 
-int	count_nodes(t_stack *cur)
+int count_nodes(t_stack *cur)
 {
-	int	num_of_nodes;
+	int num_of_nodes;
 
 	num_of_nodes = 0;
 	while (cur)
@@ -57,7 +51,7 @@ int	count_nodes(t_stack *cur)
 	return (num_of_nodes);
 }
 
-void	print_action(int action, int stack_id)
+void print_action(int action, int stack_id)
 {
 	if (action == 0)
 	{
@@ -86,13 +80,13 @@ void	print_action(int action, int stack_id)
 	}
 }
 
-void	srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
+void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 {
-	int	rotate_switch;
+	int rotate_switch;
 
 	rotate_switch = 1;
-	if (cur->fin_pos < round((double)inputs / 2))
-		rotate_switch = 2;
+	if (cur->fin_pos < ft_round((double)inputs / 2))
+		rotate_switch = -1;
 	while (cur->fwd)
 	{
 		if (cur->num == s.max)
@@ -104,11 +98,7 @@ void	srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
 			return ;
 		cur = cur->fwd;
 	}
-	if (rotate_switch == 1)
-		while (!is_sorted(a))
-			rotate(a, NULL, 1);
-	if (rotate_switch == 2)
-		while (!is_sorted(a))
-			rev_rotate(a, NULL, 1);
-	return ;
+	while (!is_sorted(a))
+		rotate_choose(a, NULL, 1, rotate_switch);
+	return;
 }
