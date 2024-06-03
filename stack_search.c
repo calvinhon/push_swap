@@ -6,31 +6,11 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 09:36:13 by chon              #+#    #+#             */
-/*   Updated: 2024/05/31 16:25:48 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 13:29:24 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	find_fin_pos_in_node(t_stack *cur, int node_pos)
-{
-	if (node_pos < 0)
-	{
-		while (cur->fwd)
-			cur = cur->fwd;
-		while (cur->bwd && ++node_pos < 0)
-			cur = cur->bwd;
-	}
-	else
-	{
-		while (node_pos > 0)
-		{
-			cur = cur->fwd;
-			node_pos--;
-		}
-	}
-	return (cur->fin_pos);
-}
 
 int	find_num_in_node(t_stack *cur, int node_pos)
 {

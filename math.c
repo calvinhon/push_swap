@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:01:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/29 15:52:22 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 13:38:03 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	ft_round(double num)
 	while (num > 1)
 		num--;
 	remainder = num;
-	return(orig_num - remainder);
+	if (remainder != 1)
+		return(orig_num - remainder);
+	return (orig_num);
 }
 
 long	min(long num1, long num2)

@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/05/31 16:19:21 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 15:03:43 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,5 @@ void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 		h.best_combined_moves = 2147483647;
 		empty_stack(b, a, 1, h);
 	}
-	srtd_but_err(a, *a, inputs, s);
+	ordered_but_err(a, inputs, s);
 }

@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:54:20 by chon              #+#    #+#             */
-/*   Updated: 2024/05/15 12:01:01 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 16:08:36 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int are_ints(char **array)
 	int j;
 	long long num;
 
-	i = 0;
+	i = -1;
 	j = -1;
 	while (array[++i])
 	{
@@ -29,9 +29,9 @@ int are_ints(char **array)
 			return (0);
 		while (array[i][++j])
 		{
-			if (j == 0 && array[i][j] == '-')
+			if ((array[i][j] == '-' || array[i][j] == '+') && j == 0)
 				j++;
-			if (ft_isdigit((array[i][j])) == 0)
+			if (array[i][j] && !ft_isdigit((array[i][j])))
 				return (0);
 		}
 		j = -1;
@@ -94,13 +94,13 @@ int *parse_inputs(int ac, char **av)
 	int 	elements;
 	char	**split_av;
 
-	i = 1;
+	i = 0;
 	j = 0;
 	elements = 0;
 	while (--ac > 0)
 	{
-		split_av = ft_split(av[i++], ' ');
-		if (are_ints(split_av) == 0)
+		split_av = ft_split(av[++i], ' ');
+		if (!are_ints(split_av) || !split_av[0])
 		{
 			free_char_array(split_av);
 			return (NULL);

@@ -1,68 +1,82 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_op_1.c                                       :+:      :+:    :+:   */
+/*   stack_moves.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/05/28 16:04:25 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 15:41:41 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	swap(t_stack **s1, t_stack **s2, int stack_id)
 {
 	int	tmp_num;
 	int	tmp_position;
 
-	if (!*stack_1 || !(*stack_1)->fwd)
+	if (!*s1 || !(*s1)->fwd)
 		return ;
-	tmp_num = (*stack_1)->num;
-	tmp_position = (*stack_1)->fin_pos;
-	(*stack_1)->num = (*stack_1)->fwd->num;
-	(*stack_1)->fin_pos = (*stack_1)->fwd->fin_pos;
-	(*stack_1)->fwd->num = tmp_num;
-	(*stack_1)->fwd->fin_pos = tmp_position;
+	tmp_num = (*s1)->num;
+	tmp_position = (*s1)->fin_pos;
+	(*s1)->num = (*s1)->fwd->num;
+	(*s1)->fin_pos = (*s1)->fwd->fin_pos;
+	(*s1)->fwd->num = tmp_num;
+	(*s1)->fwd->fin_pos = tmp_position;
 	if (stack_id == 3)
 	{
-		if (!*stack_2 || !(*stack_2)->fwd)
+		if (!*s2 || !(*s2)->fwd)
 			return ;
-		tmp_num = (*stack_2)->num;
-		tmp_position = (*stack_2)->fin_pos;
-		(*stack_2)->num = (*stack_2)->fwd->num;
-		(*stack_2)->fin_pos = (*stack_2)->fwd->fin_pos;
-		(*stack_2)->fwd->num = tmp_num;
-		(*stack_2)->fwd->fin_pos = tmp_position;
+		tmp_num = (*s2)->num;
+		tmp_position = (*s2)->fin_pos;
+		(*s2)->num = (*s2)->fwd->num;
+		(*s2)->fin_pos = (*s2)->fwd->fin_pos;
+		(*s2)->fwd->num = tmp_num;
+		(*s2)->fwd->fin_pos = tmp_position;
 	}
 	print_action(0, stack_id);
 }
 
 void	push(t_stack **from, t_stack **to, int stack_id)
 {
+	t_stack	*tmp_to;
+	t_stack	*tmp_from;
+
 	if (!(*from))
 		return ;
-	else if (!(*to))
-		*to = new_node((*from)->num, (*from)->fin_pos);
+	tmp_to = *to;
+	tmp_from = *from;
+	*from = (*from)->fwd;
+	if (*from)
+		(*from)->bwd = NULL;
+	if (!(*to))
+	{
+		*to = tmp_from;
+		(*to)->fwd = NULL;
+	}
 	else
-		add(to, new_node((*from)->num, (*from)->fin_pos), 0);
-	*from = del_first_node(*from);
+	{
+		*to = tmp_from;
+		(*to)->fwd = tmp_to;
+		tmp_to->bwd = *to;
+	}
 	if (stack_id == 1)
 		ft_printf("pb\n");
 	if (stack_id == 2)
 		ft_printf("pa\n");
 }
 
-void	rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	rotate(t_stack **s1, t_stack **s2, int stack_id)
 {
 	int		tmp_num;
 	int		tmp_position;
 	t_stack	*cur;
 
-	if (!*stack_1)
+	if (!*s1)
 		return ;
-	cur = *stack_1;
+	cur = *s1;
 	tmp_num = cur->num;
 	tmp_position = cur->fin_pos;
 	while (cur->fwd)
@@ -74,19 +88,19 @@ void	rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	cur->num = tmp_num;
 	cur->fin_pos = tmp_position;
 	if (stack_id == 3)
-		rotate(stack_2, NULL, 0);
+		rotate(s2, NULL, 0);
 	print_action(1, stack_id);
 }
 
-void	rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
+void	rev_rotate(t_stack **s1, t_stack **s2, int stack_id)
 {
 	int		tmp_num;
 	int		tmp_position;
 	t_stack	*cur;
 
-	if (!*stack_1)
+	if (!*s1)
 		return ;
-	cur = *stack_1;
+	cur = *s1;
 	while (cur->fwd)
 		cur = cur->fwd;
 	tmp_num = cur->num;
@@ -100,7 +114,7 @@ void	rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id)
 	cur->num = tmp_num;
 	cur->fin_pos = tmp_position;
 	if (stack_id == 3)
-		rev_rotate(stack_2, NULL, 0);
+		rev_rotate(s2, NULL, 0);
 	if (stack_id == 1)
 		ft_printf("rra\n");
 	else

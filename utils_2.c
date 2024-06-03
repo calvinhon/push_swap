@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/05/31 16:26:45 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/03 15:20:56 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,15 @@ void print_action(int action, int stack_id)
 	}
 }
 
-void srtd_but_err(t_stack **a, t_stack *cur, int inputs, t_stack_num s)
+void ordered_but_err(t_stack **a, int inputs, t_stack_num s)
 {
 	int rotate_switch;
 
 	rotate_switch = 1;
-	if (cur->fin_pos < ft_round((double)inputs / 2))
+	if (idx_of_num(*a, s.min) > ft_round((double)inputs / 2))
 		rotate_switch = -1;
-	while (cur->fwd)
-	{
-		if (cur->num == s.max)
-		{
-			if (cur->fwd->num != s.min)
-				return ;
-		}
-		else if (cur->fin_pos != cur->fwd->fin_pos - 1)
-			return ;
-		cur = cur->fwd;
-	}
-	while (!is_sorted(a))
-		rotate_choose(a, NULL, 1, rotate_switch);
-	return;
+	if (is_ordered(*a, -1))
+		while ((*a)->fin_pos != 0)
+			rotate_choose(a, NULL, 1, rotate_switch);
+	return ;
 }
