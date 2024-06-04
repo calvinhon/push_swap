@@ -6,11 +6,37 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:54:20 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 16:08:36 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/04 16:49:38 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+int create_stack(t_stack **stack, int *inputs, int num_of_inputs)
+{
+	int 	i;
+	int 	*fin_pos;
+	t_stack	*cur;
+	t_stack	*tmp;
+
+	i = 0;
+	fin_pos = calloc(sizeof(int), num_of_inputs);
+	if (!fin_pos)
+		return (0);
+	fill_final_pos(fin_pos, inputs, num_of_inputs);
+	*stack = new_node(inputs[i], fin_pos[i]);
+	cur = *stack;
+	while (--num_of_inputs > 0)
+	{
+		i++;
+		tmp = cur;
+		cur->fwd = new_node(inputs[i], fin_pos[i]);
+		cur = cur->fwd;
+		cur->bwd = tmp;
+	}
+	free(fin_pos);
+	return (1);
+}
 
 int are_ints(char **array)
 {

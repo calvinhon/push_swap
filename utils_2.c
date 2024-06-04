@@ -6,36 +6,62 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 15:20:56 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/04 16:50:42 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c)
+void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
 {
-	if (c == 'f' && cur->fwd)
+	int i;
+	int j;
+	int prior_max_position;
+
+	i = -1;
+	j = 0;
+	while (--num_of_inputs > 0)
 	{
-		if (cur->num == s.max && cur->fwd->num == s.min)
-			return (1);
-		if (cur->num == s.min && cur->fwd->num == s.max)
-			return (2);
+		prior_max_position = 0;
+		j++;
+		while (++i < j)
+		{
+			if (inputs[j] > inputs[i])
+			{
+				if (fin_pos[i] > prior_max_position)
+					prior_max_position = fin_pos[i];
+				fin_pos[j] = prior_max_position + 1;
+			}
+			else
+				fin_pos[i]++;
+		}
+		i = -1;
 	}
-	else if (c == 'b' && cur->bwd)
+}
+
+int	ct_elements(char **av)
+{
+	int		i;
+	int		j;
+	int		elements;
+
+	i = 0;
+	j = 0;
+	elements = 0;
+	while (av[++i])
 	{
-		if (cur->num == s.min && cur->bwd->num == s.max)
-			return (1);
-		if (cur->num == s.max && cur->bwd->num == s.min)
-			return (2);
+		while (av[i][j])
+		{
+			while (av[i][j] && av[i][j] == ' ')
+				j++;
+			if (av[i][j] && av[i][j] != ' ')
+			elements++;
+			while (av[i][j] && av[i][j] != ' ')
+				j++;
+		}
+		j = 0;
 	}
-	else if (c == 'e')
-	{
-		if (cur->num == s.max && (*stack)->num == s.min)
-			return (1);
-		if (cur->num == s.min && (*stack)->num == s.max)
-			return (2);
-	}
-	return (0);
+	return (elements);
 }
 
 int count_nodes(t_stack *cur)

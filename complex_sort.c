@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 15:03:43 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/04 13:51:06 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
+void	rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
 {
 	h.order_to = h.best_shift_to > 0;
 	h.order_from = h.best_shift_from > 0;
@@ -41,7 +41,7 @@ void rotate_two_stacks(t_stack **from, t_stack **to, t_helper h, int order)
 	}
 }
 
-void find_best_moves(t_helper *h)
+void	find_best_moves(t_helper *h)
 {
 	if (h->shift_to > 0 && h->shift_from > 0)
 	{
@@ -68,27 +68,34 @@ void find_best_moves(t_helper *h)
 	}
 }
 
-void shift_helper(t_stack *from, int order, t_helper *h)
+void	shift_helper(t_stack *from, int order, t_helper *h)
 {
 	while (h->c_to)
 	{
 		if (order == -1)
 		{
 			h->shift_to++;
-			if (h->c_to->fwd && ((from->num > h->max_to && h->c_to->num == h->min_to && h->c_to->fwd->num == h->max_to) || ((from->num < h->c_to->num && from->num > h->c_to->fwd->num)) || (from->num < h->min_to && h->c_to->fwd->num == h->max_to)))
-				break;
+			if (h->c_to->fwd && ((from->num > h->max_to && h->c_to->num
+						== h->min_to && h->c_to->fwd->num == h->max_to)
+					|| ((from->num < h->c_to->num && from->num
+							> h->c_to->fwd->num)) || (from->num < h->min_to
+						&& h->c_to->fwd->num == h->max_to)))
+				break ;
 		}
 		else
 		{
-			if ((from->num > h->max_to && h->c_to->num == h->min_to) || (h->c_to->bwd && ((from->num < h->min_to && h->c_to->bwd->num == h->max_to) || (from->num > h->c_to->bwd->num && from->num < h->c_to->num))))
-				break;
+			if ((from->num > h->max_to && h->c_to->num == h->min_to)
+				|| (h->c_to->bwd && ((from->num < h->min_to
+							&& h->c_to->bwd->num == h->max_to) || (from->num
+							> h->c_to->bwd->num && from->num < h->c_to->num))))
+				break ;
 			h->shift_to++;
 		}
 		h->c_to = h->c_to->fwd;
 	}
 }
 
-void empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
+void	empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
 {
 	h.c_from = *from;
 	h.node_from = 0;
@@ -108,7 +115,7 @@ void empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
 			h.shift_from = -h.length_from + h.node_from;
 		find_best_moves(&h);
 		if (h.best_combined_moves == 0)
-			break;
+			break ;
 		h.node_from++;
 		h.c_from = h.c_from->fwd;
 	}
@@ -116,9 +123,9 @@ void empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
 	push(from, to, 1 + max(0, order));
 }
 
-void complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
+void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 {
-	t_helper h;
+	t_helper	h;
 
 	h.min = min_nbr(*a);
 	h.max = max_nbr(*a);

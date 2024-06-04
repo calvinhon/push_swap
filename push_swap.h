@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 15:21:50 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/04 16:32:05 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs);
 void	print_action(int action, int stack_id);
 void	ordered_but_err(t_stack **stack_a, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
-int		is_max_min_order(t_stack **stack, t_stack *cur, t_stack_num s, char c);
 int		ft_round(double num);
 int		ft_abs(int num);
 long	min(long num1, long num2);
@@ -83,5 +82,7 @@ void	free_char_array(char **array);
 void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order);
 void	sort_stack_ct_3(t_stack **a);
 void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs);
+int		ct_elements(char **av);
+int 	create_stack(t_stack **stack, int *inputs, int num_of_inputs);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:49:51 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 16:09:17 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/04 14:14:26 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,11 @@ void simple_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 	sort_stack_ct_3(a);
 	while (*b)
 	{
-		while (*b && ((*a)->fin_pos == (*b)->fin_pos + 1
-			|| ((*a)->num == s.min && (*b)->num == s.max)))
+		while (*b && ((*a)->fin_pos == (*b)->fin_pos + 1 || ((*a)->num == s.min && (*b)->num == s.max)))
 			push(b, a, 2);
 		if (*b)
 		{
-			if (idx_of_fin_pos(*a, (*b)->fin_pos + 1)
-				< ft_round((double)count_nodes(*a) / 2))
+			if (idx_of_fin_pos(*a, (*b)->fin_pos + 1) < ft_round((double)count_nodes(*a) / 2))
 				rotate(a, NULL, 1);
 			else
 				rev_rotate(a, NULL, 1);
@@ -87,8 +85,9 @@ void sort_stack(t_stack **a, t_stack **b, int inputs)
 	ordered_but_err(a, inputs, s);
 	if (inputs > 3 && inputs < 6)
 	{
-		if (((*a)->num > (*a)->fwd->num && is_max_min_order(a, *a, s, 'f') != 1)
-			|| (is_max_min_order(a, *a, s, 'f') == 2))
+		if (((*a)->num > (*a)->fwd->num
+			&& !((*a)->num == s.max && (*a)->fwd->num == s.min))
+			|| ((*a)->num == s.min && (*a)->fwd->num == s.max))
 			swap(a, NULL, 1);
 		ordered_but_err(a, inputs, s);
 		if (is_perfect(a))
