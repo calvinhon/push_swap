@@ -6,13 +6,13 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 12:00:26 by chon              #+#    #+#             */
-/*   Updated: 2024/06/03 15:41:41 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 10:51:50 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(t_stack **s1, t_stack **s2, int stack_id)
+void	swap(t_stack **s1, t_stack **s2, int stack_id, int print)
 {
 	int	tmp_num;
 	int	tmp_position;
@@ -36,10 +36,11 @@ void	swap(t_stack **s1, t_stack **s2, int stack_id)
 		(*s2)->fwd->num = tmp_num;
 		(*s2)->fwd->fin_pos = tmp_position;
 	}
-	print_action(0, stack_id);
+	if (print)
+		print_action(0, stack_id);
 }
 
-void	push(t_stack **from, t_stack **to, int stack_id)
+void	push(t_stack **from, t_stack **to, int stack_id, int print)
 {
 	t_stack	*tmp_to;
 	t_stack	*tmp_from;
@@ -62,13 +63,13 @@ void	push(t_stack **from, t_stack **to, int stack_id)
 		(*to)->fwd = tmp_to;
 		tmp_to->bwd = *to;
 	}
-	if (stack_id == 1)
+	if (stack_id == 1 && print)
 		ft_printf("pb\n");
-	if (stack_id == 2)
+	if (stack_id == 2 && print)
 		ft_printf("pa\n");
 }
 
-void	rotate(t_stack **s1, t_stack **s2, int stack_id)
+void	rotate(t_stack **s1, t_stack **s2, int stack_id, int print)
 {
 	int		tmp_num;
 	int		tmp_position;
@@ -88,11 +89,12 @@ void	rotate(t_stack **s1, t_stack **s2, int stack_id)
 	cur->num = tmp_num;
 	cur->fin_pos = tmp_position;
 	if (stack_id == 3)
-		rotate(s2, NULL, 0);
-	print_action(1, stack_id);
+		rotate(s2, NULL, 0, print);
+	if (print)
+		print_action(1, stack_id);
 }
 
-void	rev_rotate(t_stack **s1, t_stack **s2, int stack_id)
+void	rev_rotate(t_stack **s1, t_stack **s2, int stack_id, int print)
 {
 	int		tmp_num;
 	int		tmp_position;
@@ -114,17 +116,17 @@ void	rev_rotate(t_stack **s1, t_stack **s2, int stack_id)
 	cur->num = tmp_num;
 	cur->fin_pos = tmp_position;
 	if (stack_id == 3)
-		rev_rotate(s2, NULL, 0);
-	if (stack_id == 1)
+		rev_rotate(s2, NULL, 0, print);
+	if (stack_id == 1 && print)
 		ft_printf("rra\n");
-	else
+	else if (print)
 		print_action(2, stack_id);
 }
 
 void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order)
 {
 	if (order == 1)
-		rotate(s1, s2, stack_id);
+		rotate(s1, s2, stack_id, 1);
 	else
-		rev_rotate(s1, s2, stack_id);
+		rev_rotate(s1, s2, stack_id, 1);
 }

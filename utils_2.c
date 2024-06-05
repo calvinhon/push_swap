@@ -6,17 +6,17 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 15:00:46 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 16:50:42 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 14:27:44 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
+void	fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs)
 {
-	int i;
-	int j;
-	int prior_max_position;
+	int	i;
+	int	j;
+	int	prior_max_position;
 
 	i = -1;
 	j = 0;
@@ -55,7 +55,7 @@ int	ct_elements(char **av)
 			while (av[i][j] && av[i][j] == ' ')
 				j++;
 			if (av[i][j] && av[i][j] != ' ')
-			elements++;
+				elements++;
 			while (av[i][j] && av[i][j] != ' ')
 				j++;
 		}
@@ -64,9 +64,9 @@ int	ct_elements(char **av)
 	return (elements);
 }
 
-int count_nodes(t_stack *cur)
+int	count_nodes(t_stack *cur)
 {
-	int num_of_nodes;
+	int	num_of_nodes;
 
 	num_of_nodes = 0;
 	while (cur)
@@ -77,7 +77,7 @@ int count_nodes(t_stack *cur)
 	return (num_of_nodes);
 }
 
-void print_action(int action, int stack_id)
+void	print_action(int action, int stack_id)
 {
 	if (action == 0)
 	{
@@ -106,9 +106,9 @@ void print_action(int action, int stack_id)
 	}
 }
 
-void ordered_but_err(t_stack **a, int inputs, t_stack_num s)
+void	ordered_but_err(t_stack **a, int inputs, t_stack_num s)
 {
-	int rotate_switch;
+	int	rotate_switch;
 
 	rotate_switch = 1;
 	if (idx_of_num(*a, s.min) > ft_round((double)inputs / 2))

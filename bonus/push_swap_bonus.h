@@ -6,12 +6,12 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 14:29:00 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 16:35:59 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 14:28:33 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_BONUS_H
- # define PUSH_SWAP_BONUS_H
+# define PUSH_SWAP_BONUS_H
 
 # include "../push_swap.h"
 

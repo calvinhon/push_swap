@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:01:09 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 13:51:06 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 10:55:21 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	empty_stack(t_stack **from, t_stack **to, int order, t_helper h)
 		h.c_from = h.c_from->fwd;
 	}
 	rotate_two_stacks(from, to, h, order);
-	push(from, to, 1 + max(0, order));
+	push(from, to, 1 + max(0, order), 1);
 }
 
 void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
@@ -129,8 +129,8 @@ void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs)
 
 	h.min = min_nbr(*a);
 	h.max = max_nbr(*a);
-	push(a, b, 1);
-	push(a, b, 1);
+	push(a, b, 1, 1);
+	push(a, b, 1, 1);
 	while (count_nodes(*a) > 3)
 	{
 		h.best_combined_moves = 2147483647;

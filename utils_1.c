@@ -6,15 +6,15 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 11:30:30 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 15:19:21 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 14:27:06 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int is_perfect(t_stack **stack)
+int	is_perfect(t_stack **stack)
 {
-	t_stack *cur;
+	t_stack	*cur;
 
 	cur = *stack;
 	while (cur->fwd)

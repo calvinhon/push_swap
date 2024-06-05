@@ -6,7 +6,7 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:02:37 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 16:32:05 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 14:28:00 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define PUSH_SWAP_H
 
 # include "libft/libft.h"
+
+typedef struct s_idx
+{
+	int	i;
+	int	j;
+	int	k;
+}	t_idx;
 
 typedef struct s_stack_num
 {
@@ -56,13 +63,13 @@ typedef struct s_helper
 }	t_helper;
 
 int		*parse_inputs(int ac, char **av);
-void	swap(t_stack **stack_1, t_stack **stack_2, int stack_id);
-void	push(t_stack **from, t_stack **to, int stack_id);
-void	rotate(t_stack **stack_1, t_stack **stack_2, int stack_id);
-void	rev_rotate(t_stack **stack_1, t_stack **stack_2, int stack_id);
+void	swap(t_stack **s1, t_stack **s2, int stack_id, int print);
+void	push(t_stack **from, t_stack **to, int stack_id, int print);
+void	rotate(t_stack **s1, t_stack **s2, int stack_id, int print);
+void	rev_rotate(t_stack **s1, t_stack **s2, int stack_id, int print);
 t_stack	*new_node(int nbr, int position);
 void	free_stack(t_stack **stack);
-void	sort_stack(t_stack **stack_a, t_stack **stack_b, int inputs);
+void	sort_stack(t_stack **a, t_stack **b, int inputs);
 int		max_nbr(t_stack *cur);
 int		min_nbr(t_stack *cur);
 int		find_num_in_node(t_stack *cur, int node_pos);
@@ -72,7 +79,7 @@ int		is_perfect(t_stack **stack);
 int		count_nodes(t_stack *cur);
 void	fill_final_pos(int *fin_pos, int *inputs, int num_of_inputs);
 void	print_action(int action, int stack_id);
-void	ordered_but_err(t_stack **stack_a, int ac, t_stack_num s);
+void	ordered_but_err(t_stack **a, int ac, t_stack_num s);
 int		is_ordered(t_stack *node, int num_of_nodes);
 int		ft_round(double num);
 int		ft_abs(int num);
@@ -83,6 +90,6 @@ void	rotate_choose(t_stack **s1, t_stack **s2, int stack_id, int order);
 void	sort_stack_ct_3(t_stack **a);
 void	complex_sort_alg(t_stack **a, t_stack **b, t_stack_num s, int inputs);
 int		ct_elements(char **av);
-int 	create_stack(t_stack **stack, int *inputs, int num_of_inputs);
+int		create_stack(t_stack **stack, int *inputs, int num_of_inputs);
 
 #endif

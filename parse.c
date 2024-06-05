@@ -6,16 +6,16 @@
 /*   By: chon <chon@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 15:54:20 by chon              #+#    #+#             */
-/*   Updated: 2024/06/04 16:49:38 by chon             ###   ########.fr       */
+/*   Updated: 2024/06/05 14:24:42 by chon             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int create_stack(t_stack **stack, int *inputs, int num_of_inputs)
+int	create_stack(t_stack **stack, int *inputs, int num_of_inputs)
 {
-	int 	i;
-	int 	*fin_pos;
+	int		i;
+	int		*fin_pos;
 	t_stack	*cur;
 	t_stack	*tmp;
 
@@ -38,11 +38,11 @@ int create_stack(t_stack **stack, int *inputs, int num_of_inputs)
 	return (1);
 }
 
-int are_ints(char **array)
+int	are_ints(char **array)
 {
-	int i;
-	int j;
-	long long num;
+	int			i;
+	int			j;
+	long long	num;
 
 	i = -1;
 	j = -1;
@@ -75,49 +75,49 @@ int	is_repeated(int *inputs, int elements)
 	{
 		j = i + 1;
 		while (j < elements)
+		{
 			if (inputs[i] == inputs[j++])
 			{
 				free(inputs);
 				return (1);
 			}
+		}
 	}
 	return (0);
 }
 
 int	*pull_inputs(char **av, int elements)
 {
-	int		i;
-	int		j;
-	int		k;
+	t_idx	idx;
 	char	**split_av;
 	int		orig_num_of_elements;
-	int 	*inputs;
+	int		*inputs;
 
-	i = 0;
-	j = 1;
-	k = -1;
+	idx.i = 0;
+	idx.j = 1;
+	idx.k = -1;
 	inputs = malloc(sizeof(int) * elements);
 	if (!inputs)
 		return (NULL);
 	orig_num_of_elements = elements;
-	while (av[j] && --elements > -1)
+	while (av[idx.j] && --elements > -1)
 	{
-		split_av = ft_split(av[j++], ' ');
-		while (split_av[++k])
-			inputs[i++] = ft_atoi(split_av[k]);
+		split_av = ft_split(av[idx.j++], ' ');
+		while (split_av[++idx.k])
+			inputs[idx.i++] = ft_atoi(split_av[idx.k]);
 		free_char_array(split_av);
-		k = -1;
+		idx.k = -1;
 	}
 	if (is_repeated(inputs, orig_num_of_elements))
 		inputs = NULL;
 	return (inputs);
 }
 
-int *parse_inputs(int ac, char **av)
+int	*parse_inputs(int ac, char **av)
 {
-	int 	i;
-	int 	j;
-	int 	elements;
+	int		i;
+	int		j;
+	int		elements;
 	char	**split_av;
 
 	i = 0;
